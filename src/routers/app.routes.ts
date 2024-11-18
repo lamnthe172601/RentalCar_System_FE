@@ -64,7 +64,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
         roles: ['customer']
-    }  
+    }
+      
   },
   {
     path: 'car-grid',
@@ -86,6 +87,16 @@ export const routes: Routes = [
     title: 'Verify Email',
     component: VerifyEmailComponent,
   },
+  {
+    path: 'cart',
+    title: 'Cart',
+    component: CarGridComponent,
+    canActivate: [AuthGuard],
+    data: {
+        roles: ['customer']
+    }
+
+  }, 
   { path: '', redirectTo: "/home", pathMatch: 'full' },
   { path: '**', redirectTo: "/access-denied" } // Chuyển hướng đến trang access-denied nếu URL không hợp lệ
 ];

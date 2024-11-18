@@ -70,11 +70,11 @@
           <div class="dropdown-menu">
             <button class="nav-btn">cars <i class="fas fa-angle-down"></i> </button>
             <div class="dropdown-content">
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Rented Car</a>
+              <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Danh Sách Xe Đang Thuê</a>
               <a href="pages/Cars/Car-Grid.html">car grid</a>
               <a href="pages/Cars/Car-List.html">car list</a>
               <a href="pages/Cars/Single-Car.html">single car</a>
-              <a href="pages/Cars/Cart.html">cart</a>
+              <a *ngIf="authService.isLoggedIn()"  routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
               <a href="pages/Cars/Checkout.html">checkout</a>
             </div>
           </div>

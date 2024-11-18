@@ -1,54 +1,45 @@
 .profile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 2rem;
-  background-color: #f9f9f9;
-  min-height: calc(100vh - 200px); // Account for header/footer
+  min-height: calc(100vh - 100px);
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
 
   .profile-card {
     background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
     max-width: 800px;
-    width: 100%;
-    text-align: center;
+    margin: 2rem auto;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     padding: 3rem;
-    transition: transform 0.3s ease;
-    position: relative;
-    margin: 0 auto;
-
-    &:hover {
-      transform: translateY(-10px);
-    }
+    transition: all 0.3s ease;
 
     .profile-photo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 2rem; // Tăng margin-bottom để tạo khoảng cách lớn hơn giữa ảnh và thông tin
       position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 0 auto 2rem;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 2.5rem;
 
       .profile-photo {
         width: 100%;
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
-        border: 4px solid var(--main-color);
+        border: 4px solid #fff;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
       }
 
       .upload-button {
         position: absolute;
-        bottom: 10px;
-        right: 10px;
-        
+        bottom: 5px;
+        right: 5px;
+
         .btn-upload {
-          width: 40px;
-          height: 40px;
+          width: 45px;
+          height: 45px;
           border-radius: 50%;
           background: var(--main-color);
           color: white;
@@ -57,16 +48,16 @@
           justify-content: center;
           cursor: pointer;
           transition: all 0.3s ease;
-          border: 2px solid #fff;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+          border: 3px solid #fff;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 
           &:hover {
             transform: scale(1.1);
-            background: darken(#007bff, 10%);
+            background: darken(#007bff, 5%);
           }
 
           i {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
           }
         }
       }
@@ -74,77 +65,83 @@
 
     .profile-info {
       text-align: center;
-      margin-bottom: 2rem;
+      padding: 0 1rem;
 
       h3 {
-        font-size: 2rem;
-        color: #333;
-        margin-bottom: 1rem;
+        font-size: 2.2rem;
+        color: #2c3e50;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
       }
 
       p {
         font-size: 1.1rem;
-        color: #666;
-        margin: 0.5rem 0;
+        color: #616161;
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
 
         strong {
-          color: #333;
-          margin-right: 0.5rem;
+          color: #2c3e50;
         }
       }
 
       .btn-edit {
-        margin-top: 1.5rem;
-        padding: 0.8rem 2rem;
+        margin-top: 2rem;
+        padding: 0.8rem 2.5rem;
         background: var(--main-color);
         color: white;
         border: none;
-        border-radius: 8px;
-        cursor: pointer;
+        border-radius: 10px;
+        font-size: 1.1rem;
         transition: all 0.3s ease;
-        font-size: 1rem;
 
         i {
           margin-right: 0.5rem;
         }
 
         &:hover {
-          background: darken(#007bff, 10%);
           transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
         }
       }
     }
 
     .profile-form {
-      width: 100%;
-      max-width: 500px;
+      max-width: 450px;
       margin: 0 auto;
       padding: 1rem;
 
       .form-group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.8rem;
         text-align: left;
 
         label {
           display: block;
-          margin-bottom: 0.5rem;
-          font-weight: 600;
-          color: #333;
-          font-size: 1rem;
+          margin-bottom: 0.6rem;
+          font-weight: 500;
+          color: #2c3e50;
+          font-size: 1.1rem;
         }
 
         input {
           width: 100%;
-          padding: 0.8rem;
-          border: 1px solid #ddd;
-          border-radius: 8px;
+          padding: 0.9rem;
+          border: 2px solid #e1e8ed;
+          border-radius: 10px;
           font-size: 1rem;
           transition: all 0.3s ease;
 
           &:focus {
             border-color: var(--main-color);
-            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+            box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.1);
             outline: none;
+          }
+
+          &.ng-invalid.ng-touched {
+            border-color: #dc3545;
           }
         }
       }
@@ -153,38 +150,41 @@
         display: flex;
         gap: 1rem;
         justify-content: center;
-        margin-top: 2rem;
+        margin-top: 2.5rem;
 
         .btn {
-          padding: 0.8rem 2rem;
+          padding: 0.9rem 2.5rem;
           border: none;
-          border-radius: 8px;
+          border-radius: 10px;
+          font-size: 1.1rem;
+          font-weight: 500;
           cursor: pointer;
-          font-size: 1rem;
-          min-width: 120px;
           transition: all 0.3s ease;
+          min-width: 140px;
 
           &-save {
             background: var(--main-color);
             color: white;
 
             &:disabled {
-              background: #ccc;
+              background: #a9a9a9;
               cursor: not-allowed;
             }
 
             &:not(:disabled):hover {
-              background: darken(#007bff, 10%);
+              transform: translateY(-2px);
+              box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
             }
           }
 
           &-cancel {
             background: #f8f9fa;
-            color: #333;
-            border: 1px solid #ddd;
+            color: #2c3e50;
+            border: 2px solid #e1e8ed;
 
             &:hover {
               background: #e9ecef;
+              transform: translateY(-2px);
             }
           }
         }
@@ -193,22 +193,60 @@
   }
 
   .alert {
-    margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    animation: fadeIn 0.3s ease;
 
     &-danger {
-      background-color: #fff3f3;
+      background-color: #fff5f5;
       color: #dc3545;
       border: 1px solid #ffcdd2;
     }
 
     &-success {
-      background-color: #f0fff0;
+      background-color: #f0fff4;
       color: #28a745;
       border: 1px solid #c3e6cb;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .profile {
+    padding: 1rem;
+
+    .profile-card {
+      padding: 2rem 1rem;
+
+      .profile-photo-container {
+        width: 150px;
+        height: 150px;
+      }
+
+      .profile-info {
+        h3 {
+          font-size: 1.8rem;
+        }
+      }
+
+      .profile-form {
+        .button-group {
+          flex-direction: column;
+          
+          .btn {
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }
@@ -327,4 +365,11 @@
   .mfp-with-zoom.mfp-removing.mfp-bg {
     opacity: 0;
   }
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 }

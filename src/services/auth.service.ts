@@ -6,6 +6,8 @@ import { Auth, GoogleAuthProvider, signInWithPopup, UserCredential } from '@angu
 import { CarRented } from '../models/car-rented.model';
 import { CartItemDto } from '../models/cart-item.model';
 import { rentCarRequest } from '../models/rent-car.model copy';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,9 @@ import { rentCarRequest } from '../models/rent-car.model copy';
 export class AuthService {
   private tokenExpirationTimer: any;
   private readonly TOKEN_EXPIRATION_TIME = 10 * 60 * 1000; // 30 seconds
+  private apiUrl = 'https://localhost:44360/api/Car';
 
-  constructor(private apiService: ApiService, private router: Router, private auth: Auth) {
+  constructor(private apiService: ApiService, private router: Router, private auth: Auth, private http: HttpClient) {
     this.initializeTokenCheck();
     this.setupActivityListeners();
   }
@@ -156,9 +159,9 @@ export class AuthService {
     }
   }
   handleGetCars(): Observable<any> {
-    return this.apiService.getCars();  
+    return this.http.get(`${this.apiUrl}/all-car`);
   }
-  
+ 
   private handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -210,9 +213,7 @@ export class AuthService {
   }
 
   uploadAvatar(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file);
-    return this.apiService.uploadAvatar(formData);
+    return this.apiService.uploadAvatar(file);
   }
 
   getAvatarUrl(): Observable<Blob> {
@@ -223,6 +224,22 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+  getCarById(id: string): Observable<any> {
+    return this.apiService.getCarById(id);
+  }
+  deleteCar(carId: string): Observable<any> {
+    return this.apiService.deleteCar(carId).pipe(
+      catchError((error) => {
+        console.error('Error deleting car:', error);
+        return throwError(() => new Error('Failed to delete car.'));
+      })
+    );
+  }
+  // Cập nhật thông tin của một chiếc xe
+  updateCar(carId: string, carData: any): Observable<any> {
+    return this.apiService.updateCar(carId, carData);
+  }
+  
   forgotPassword(email: string): Observable<any> {
     return this.apiService.forgotPassword({ email });
   }
@@ -234,6 +251,8 @@ export class AuthService {
   verifyEmail(token: string, email: string): Observable<any> {
     return this.apiService.verifyEmail({ token, email });
   }
- 
-}
 
+  getAvatar(): Observable<Blob> {
+    return this.apiService.getAvatar();
+  }
+}

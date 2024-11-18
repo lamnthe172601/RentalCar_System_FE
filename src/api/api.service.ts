@@ -6,13 +6,15 @@ import { CarRented } from '../models/car-rented.model';
 import { ForgotPasswordRequest, ResetPasswordRequest, VerifyEmailRequest } from '../models/password.model';
 import { CartItemDto } from '../models/cart-item.model';
 import { rentCarRequest } from '../models/rent-car.model copy';
+import { UserProfile } from 'firebase/auth';
+import { UpdateProfileRequest } from '../models/profile.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private headerCustom = {}
+  private headerCustom: { headers: { [key: string]: string } } = { headers: { "Authorization": "Bearer " + localStorage.getItem("token") || '' } }
 
   constructor(private http: HttpClient) {
     this.headerCustom = { headers: { "Authorization": "Bearer " + localStorage.getItem("token") } }
@@ -39,16 +41,25 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/General/change-password`, data, this.headerCustom);
   }
 
-  getProfile(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/General/Get-profile`, this.headerCustom);
+  getProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.baseUrl}/General/Get-profile`, this.headerCustom);
   }
 
-  updateProfile(data: any): Observable<any> {
+  updateProfile(data: UpdateProfileRequest): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/General/update-profile`, data, this.headerCustom);
   }
 
-  uploadAvatar(formData: FormData): Observable<any> {
+  uploadAvatar(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
     return this.http.post<any>(`${this.baseUrl}/General/upload-avatar`, formData, this.headerCustom);
+  }
+
+  getAvatar(): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/General/get-avatar`, {
+      ...this.headerCustom,
+      responseType: 'blob'
+    });
   }
 
   getAvatarUrl(): Observable<Blob> {
@@ -75,9 +86,18 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}/Car/all-car`);
   }
   addCar(carData: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/Car/add-car`, carData, this.headerCustom);
+    return this.http.post<any>(`${this.baseUrl}/Car/add-car`, carData);
+  }
+  getCarById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Car/get-car/${id}`);
   }
 
+  updateCar(carId: string, carData: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/Car/edit-car/${carId}`, carData);
+  }
+  deleteCar(carData: any): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/Car/id`, carData);
+  }
   searchCar(query: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Car/search-car?query=${query}`, this.headerCustom);
   }

@@ -104,6 +104,7 @@
 <div class="car-container grid">
   <div *ngFor="let car of displayedCars" class="car-item">
     <div class="image">
+      
       <img [src]="getCarImagePath(car)" alt="{{ car.name }}">
     </div>
     <div class="content">

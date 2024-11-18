@@ -15,42 +15,44 @@ import { VerifyEmailComponent } from '../views/Pages/verify-email/verify-email.c
 import { AuthGuard } from '../guards/auth.guard';
 import { CartComponent } from '../views/Cars/cart/cart.component';
 import { CheckOutComponent } from '../views/check-out/check-out.component';
+import { EditCarComponent } from '../views/Cars/edit-car/edit-car.component';
+import { AdminCarComponent } from '../views/Cars/admin-car/admin-car.component';
 
 export const routes: Routes = [
   {
     path: 'home',
-    title: 'Home',
+    title: 'Trang chủ',
     component: HomePageComponent,
     children: [      
     ]
   },
   {
     path: 'login',
-    title: 'login',
+    title: 'Đăng nhập',
     component: LoginComponent,
     canActivate: [AuthLoginGuard]
   },
   {
     path: 'register',
-    title: 'Register',
+    title: 'Đăng ký',
     component: RegisterComponent,
     canActivate: [AuthLoginGuard]
   },
   {
     path: 'reset-password',
-    title: 'Reset Password',
+    title: 'Đặt lại mật khẩu',
     component: ResetPasswordComponent,
     canActivate: [AuthLoginGuard]
   },
   {
     path: 'change-password',
-    title: 'Change Password',
+    title: 'Thay đổi mật khẩu',
     canActivate: [AuthGuard],
     component: ChangePasswordComponent,
   },
   {
     path: 'profile',
-    title: 'Profile',
+    title: 'Thông tin cá nhân',
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
@@ -83,6 +85,18 @@ export const routes: Routes = [
    component: AddCarComponent,
    canActivate: [AuthGuard] // Add guard if needed
  },
+ {
+  path: 'edit-car',
+  title: 'Edit Car',
+  component: EditCarComponent,
+  canActivate: [AuthGuard] // Add guard if needed
+},
+{
+  path: 'admin-car',
+  title: 'Admin Car',
+  component: AdminCarComponent,
+  canActivate: [AuthGuard] // Add guard if needed
+},
    
   {
     path: 'verify-email',

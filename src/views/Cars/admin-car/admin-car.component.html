@@ -1,0 +1,83 @@
+<!-- ==================== Tiêu Đề Trang (Bắt Đầu) ==================== -->
+<div class="page-title">
+    <div class="title">
+        <h2>Quản Lý Lưới Xe</h2>
+    </div> 
+    <div class="link">
+        <a href="../../index-2.html"><i class="fa-solid fa-house-chimney"></i> Trang Chủ</a>
+        <i class="fa-solid fa-angle-right"></i>
+        <span class="page">Quản Lý Lưới Xe</span>
+    </div>
+</div>
+<!-- ==================== Tiêu Đề Trang (Kết Thúc) ==================== -->
+
+<!-- ==================== Khu Vực Tìm Kiếm và Quản Lý Sản Phẩm (Bắt Đầu) ==================== --> 
+<section class="product-management">
+ 
+  
+
+
+    <!-- Thêm xe mới -->
+    <div class="add-product">
+        <button class="btn" onclick="window.location.href='add-product.html'">Thêm Xe Mới</button>
+    </div>
+</section>   
+<!-- ==================== Khu Vực Tìm Kiếm và Quản Lý Sản Phẩm (Kết Thúc) ==================== -->
+
+<!-- ==================== Khu Vực Quản Lý Lưới Xe (Bắt Đầu) ==================== -->
+<section class="cars">
+    <div class="intro">
+        <div class="showing">
+            Hiển thị từ {{ (currentPage - 1) * itemsPerPage + 1 }} đến 
+            {{ currentPage * itemsPerPage > cars.length ? cars.length : currentPage * itemsPerPage }}
+            trong tổng số {{ cars.length }} xe
+        </div>
+        <div class="sorting-type">
+            <select name="sort" id="sort">
+                <option value="default">Sắp xếp mặc định</option>
+                <option value="popularity">Sắp xếp theo độ phổ biến</option>
+                <option value="latest">Sắp xếp theo mới nhất</option>
+                <option value="average-price">Sắp xếp theo giá trung bình</option>
+                <option value="low-to-high">Sắp xếp theo giá: từ thấp đến cao</option>
+                <option value="high-to-low">Sắp xếp theo giá: từ cao đến thấp</option>
+            </select>
+        </div>
+    </div>
+  
+    <!-- Danh sách xe -->
+    <div class="car-container">
+        <div *ngFor="let car of displayedCars" class="car-item">
+            <div class="image">
+                <img [src]="getCarImagePath(car)" alt="{{ car.name }}">
+            </div>
+            <div class="content">
+                <h2>{{ car.name }}</h2>
+                <div class="details">
+                    <p>Hãng xe: {{ car.brand }}</p>
+                    <p>Giá: {{ car.price }} VND</p>
+                    <p>Màu sắc: {{ car.color }}</p>
+                    <p>Số ghế: {{ car.seats }} người</p>
+                    <p>Năm sản xuất: {{ car.year }}</p>
+                    <p>Xuất xứ: {{ car.madeIn }}</p>
+                    <p>Quá trình sử dụng: {{ car.mileage }} km</p>
+                </div>
+                <div class="actions">
+                    <a href="edit-product.html?carId={{ car.id }}" class="btn">Sửa</a>
+                    <a href="delete-product.html?carId={{ car.id }}" class="btn">Xóa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <!-- Nút phân trang -->
+    <div class="pagination">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+            Trước
+        </button>
+        <span>Trang {{ currentPage }} của {{ totalPages }}</span>
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+            Sau
+        </button>
+    </div>
+</section>
+<!-- ==================== Khu Vực Quản Lý Lưới Xe (Kết Thúc) ==================== -->

@@ -1,0 +1,26 @@
+// home-page.component.scss
+.car-item {
+    .image {
+      width: 100%;
+      height: 250px; // Fixed height
+      overflow: hidden;
+      position: relative;
+  
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; // Maintain aspect ratio
+        display: block;
+      }
+  
+      .price {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+    }
+  }

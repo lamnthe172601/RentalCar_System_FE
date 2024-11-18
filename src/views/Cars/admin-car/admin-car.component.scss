@@ -1,0 +1,232 @@
+// Tổng thể
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  // Tiêu đề trang
+  .page-title {
+    background-color: #007BFF;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  
+    .title h2 {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+  
+    .link {
+      font-size: 1rem;
+      margin-top: 5px;
+      
+      a {
+        color: white;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+    }
+  }
+  
+  // Quản lý sản phẩm
+  .product-management {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  
+    h4 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  
+    form {
+      display: flex;
+      gap: 20px;
+  
+      .box {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+  
+        .input-field {
+          position: relative;
+  
+          select {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            background-color: #fafafa;
+            transition: 0.3s;
+          }
+  
+          select:focus {
+            border-color: #007BFF;
+          }
+  
+          label {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #007BFF;
+          }
+        }
+      }
+  
+      button {
+        padding: 12px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  
+    .add-product {
+      margin-top: 20px;
+  
+      button {
+        padding: 12px 30px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: 0.3s;
+  
+        &:hover {
+          background-color: #218838;
+        }
+      }
+    }
+  }
+  
+  // Danh sách xe
+  .cars {
+    .intro {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+  
+      .showing {
+        font-size: 1rem;
+        color: #555;
+      }
+  
+      .sorting-type {
+        select {
+          padding: 8px 16px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+          background-color: #fafafa;
+        }
+      }
+    }
+  
+    .car-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+  
+      .car-item {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: 0.3s;
+  
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+  
+        .image img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+        }
+  
+        .content {
+          padding: 15px;
+          
+          h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: #333;
+          }
+  
+          .details p {
+            font-size: 1rem;
+            color: #555;
+            margin: 5px 0;
+          }
+  
+          .actions {
+            display: flex;
+            gap: 10px;
+  
+            a {
+              padding: 8px 16px;
+              background-color: #007BFF;
+              color: white;
+              border-radius: 8px;
+              text-decoration: none;
+              transition: 0.3s;
+  
+              &:hover {
+                background-color: #0056b3;
+              }
+            }
+          }
+        }
+      }
+    }
+  
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+  
+      button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+  
+        &:disabled {
+          background-color: #cccccc;
+          cursor: not-allowed;
+        }
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+  
+      span {
+        font-size: 1rem;
+        color: #555;
+      }
+    }
+  }
+  
+  

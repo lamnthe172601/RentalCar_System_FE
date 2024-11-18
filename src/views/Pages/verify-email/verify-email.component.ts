@@ -30,7 +30,7 @@ export class VerifyEmailComponent implements OnInit {
       if (token && email) {
         this.verifyEmail(token, email);
       } else {
-        this.errorMessage = 'Invalid verification link';
+        this.errorMessage = 'Đường dẫn xác thực không hợp lệ';
         this.verifying = false;
       }
     });
@@ -39,15 +39,15 @@ export class VerifyEmailComponent implements OnInit {
   private verifyEmail(token: string, email: string): void {
     this.authService.verifyEmail(token, email).subscribe({
       next: (response) => {
-        this.successMessage = response.message;
+        this.successMessage = response.message || 'Xác thực email thành công';
         this.errorMessage = null;
         this.verifying = false;
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 3000);
+        }, 5000);
       },
       error: (error) => {
-        this.errorMessage = error.error.message;
+        this.errorMessage = error.error.message || 'Xác thực email thất bại';
         this.successMessage = null;
         this.verifying = false;
       }

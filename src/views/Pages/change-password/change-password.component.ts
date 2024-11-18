@@ -54,13 +54,15 @@ export class ChangePasswordComponent implements OnInit {
     const control = this.changePasswordForm.get(fieldName);
     if (control && control.errors) {
       if (control.errors['required']) {
-        return 'This field is required';
+        return fieldName === 'oldPassword' ? 
+          'Vui lòng nhập mật khẩu cũ' : 
+          'Vui lòng nhập mật khẩu mới';
       }
       if (control.errors['minlength']) {
-        return 'Password must be at least 8 characters long';
+        return 'Mật khẩu phải có ít nhất 8 ký tự';
       }
       if (control.errors['pattern']) {
-        return 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character';
+        return 'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt';
       }
     }
     return '';
@@ -71,7 +73,7 @@ export class ChangePasswordComponent implements OnInit {
       const { oldPassword, newPassword } = this.changePasswordForm.value;
       this.authService.changePassword(oldPassword, newPassword).subscribe({
         next: () => {
-          this.successMessage = 'Password changed successfully';
+          this.successMessage = 'Đổi mật khẩu thành công';
           this.errorMessage = null;
           
           // Add delay before logout and navigation
@@ -84,11 +86,11 @@ export class ChangePasswordComponent implements OnInit {
         },
         error: (error) => {
           this.successMessage = null;
-          this.errorMessage = error.error.message || 'Password change failed. Please try again.';
+          this.errorMessage = error.error.message || 'Đổi mật khẩu thất bại. Vui lòng thử lại.';
         }
       });
     } else {
-      this.errorMessage = 'Please fill out all fields correctly.';
+      this.errorMessage = 'Vui lòng điền đầy đủ thông tin.';
     }
   }
 }

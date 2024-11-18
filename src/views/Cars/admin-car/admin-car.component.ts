@@ -1,31 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
-
-interface Car {
-  CarId: string;
-  Name: string;
-  LicensePlate: string;
-  Brand: string;
-  Model: string;
-  Color: string;
-  Seats: number;
-  Year: number;
-  MadeIn: string;
-  Mileage: number;
-  Status: string;
-  Price: number;
-  Description: string;
-  Images: string[];
-}
 @Component({
-  selector: 'app-car-grid',
+  selector: 'app-admin-car',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './car-grid.component.html',
-  styleUrls: ['./car-grid.component.scss']
+  templateUrl: './admin-car.component.html',
+  styleUrl: './admin-car.component.scss'
 })
-export class CarGridComponent implements OnInit {
+export class AdminCarComponent implements OnInit {
   cars: any[] = [];
   sortedCars: any[] = []; // Danh sách xe đã sắp xếp
   currentPage: number = 1; // Trang hiện tại
@@ -58,7 +41,6 @@ export class CarGridComponent implements OnInit {
     }
     return 'path/to/default/image.jpg'; // Ảnh mặc định
   }
-  
   // Tổng số trang
   get totalPages() {
     return Math.ceil(this.cars.length / this.itemsPerPage);

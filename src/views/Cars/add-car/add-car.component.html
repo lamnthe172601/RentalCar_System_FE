@@ -14,92 +14,108 @@
   <!-- ==================== Add-Car Form (Start) ==================== -->
   <section class="add-car">
   
+  <!-- Upload file Brand & Model -->
+  <div>
+    <label for="excel-brand-model">Upload Brand & Model Excel:</label>
+    <input
+      id="excel-brand-model"
+      type="file"
+      (change)="onFileChange($event, 'brandModel')"
+      accept=".xlsx, .xls"
+    />
+  </div>
+
+  <!-- Upload file Color -->
+  <div>
+    <label for="excel-color">Upload Color Excel:</label>
+    <input
+      id="excel-color"
+      type="file"
+      (change)="onFileChange($event, 'color')"
+      accept=".xlsx, .xls"
+    />
+  </div>
     <h4>Add a New Car</h4>
   
-    <form action="submit_car_form.php" id="add-car-form">
-  
-      <!-- Car Name -->
-      <div class="form-group">
-        <label for="car-name">Car Name</label>
-        <input type="text" id="car-name" name="car-name" placeholder="Enter car name" required>
-      </div>
-  
-      <!-- Car Make -->
-      <div class="form-group">
-        <label for="car-make">Car Make</label>
-        <select name="car-make" id="car-make" required>
-          <option value="" disabled selected>Select Car Make</option>
-          <option value="acura">Acura</option>
-          <option value="bmw">BMW</option>
-          <option value="audi">Audi</option>
-          <option value="chevrolet">Chevrolet</option>
-          <option value="honda">Honda</option>
-          <option value="hyundai">Hyundai</option>
-          <option value="ford">Ford</option>
-          <option value="infiniti">Infiniti</option>
-          <option value="porsche">Porsche</option>
-          <option value="mercedes">Mercedes-Benz</option>
-        </select>
-      </div>
-  
-      <!-- Car Model -->
-      <div class="form-group">
-        <label for="car-model">Model</label>
-        <input type="text" id="car-model" name="car-model" placeholder="Enter car model" required>
-      </div>
-  
-      <!-- Car Price -->
-      <div class="form-group">
-        <label for="car-price">Price</label>
-        <input type="number" id="car-price" name="car-price" placeholder="Enter car price" required>
-      </div>
-  
-      <!-- Car Color -->
-      <div class="form-group">
-        <label for="car-color">Color</label>
-        <input type="text" id="car-color" name="car-color" placeholder="Enter car color" required>
-      </div>
-  
-      <!-- Number of Seats -->
-      <div class="form-group">
-        <label for="car-seats">Seats</label>
-        <input type="number" id="car-seats" name="car-seats" placeholder="Enter number of seats" required>
-      </div>
-  
-      <!-- Car Year -->
-      <div class="form-group">
-        <label for="car-year">Year</label>
-        <input type="number" id="car-year" name="car-year" placeholder="Enter car year" required>
-      </div>
-  
-      <!-- Mileage -->
-      <div class="form-group">
-        <label for="car-mileage">Mileage (kmpl)</label>
-        <input type="number" id="car-mileage" name="car-mileage" placeholder="Enter car mileage" required>
-      </div>
-  
-      <!-- Car Status -->
-      <div class="form-group">
-        <label for="car-status">Status</label>
-        <select name="car-status" id="car-status" required>
-          <option value="available">Available</option>
-          <option value="sold">Sold</option>
-          <option value="reserved">Reserved</option>
-        </select>
-      </div>
-  
-      <!-- Description -->
-      <div class="form-group">
-        <label for="car-description">Description</label>
-        <textarea id="car-description" name="car-description" placeholder="Enter car description" required></textarea>
-      </div>
-  
-      <!-- Submit Button -->
-      <div class="form-group">
-        <button type="submit" class="btn">Add Car</button>
-      </div>
-  
-    </form>
+    <div class="form-container">
+      <form [formGroup]="addCarForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <h2>Add New Car</h2>
+        <div class="form-group">
+          <label for="name">Car Name:</label>
+          <input id="name" formControlName="name" placeholder="Enter car name" />
+        </div>
+    
+        <div class="form-group">
+          <label for="licensePlate">License Plate:</label>
+          <input id="licensePlate" formControlName="licensePlate" placeholder="Enter license plate" />
+        </div>
+    
+        <div class="form-group">
+          <label for="brand">Brand:</label>
+          <select id="brand" formControlName="brand" (change)="onBrandChange($event)">
+            <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+          </select>
+        </div>
+    
+        <div class="form-group">
+          <label for="model">Model:</label>
+          <select id="model" formControlName="model">
+            <option *ngFor="let model of filteredModels" [value]="model">{{ model }}</option>
+          </select>
+        </div>
+    
+        <div class="form-group">
+          <label for="color">Color:</label>
+          <select id="color" formControlName="color">
+            <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
+          </select>
+        </div>
+    
+        <div class="form-group">
+          <label for="seats">Seats:</label>
+          <input id="seats" formControlName="seats" type="number" placeholder="Enter number of seats" />
+        </div>
+    
+        <div class="form-group">
+          <label for="year">Year:</label>
+          <input id="year" formControlName="year" type="number" placeholder="Enter manufacturing year" />
+        </div>
+    
+        <div class="form-group">
+          <label for="madeIn">Made In:</label>
+          <input id="madeIn" formControlName="madeIn" placeholder="Enter country of origin" />
+        </div>
+    
+        <div class="form-group">
+          <label for="mileage">Mileage:</label>
+          <input id="mileage" formControlName="mileage" type="number" placeholder="Enter mileage" />
+        </div>
+    
+        <div class="form-group">
+          <label for="status">Status:</label>
+          <input id="status" formControlName="status" placeholder="Enter car status" />
+        </div>
+    
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input id="price" formControlName="price" type="number" placeholder="Enter price" />
+        </div>
+    
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" formControlName="description" placeholder="Enter description"></textarea>
+        </div>
+    
+        <div class="form-group">
+          <label for="image">Image:</label>
+          <input id="image" type="file" (change)="onFileSelected($event)" />
+        </div>
+    
+        <button type="submit" class="submit-button">Add Car</button>
+      </form>
+    </div>
+    
+    
   
   </section>
   <!-- ==================== Add-Car Form (End) ==================== -->

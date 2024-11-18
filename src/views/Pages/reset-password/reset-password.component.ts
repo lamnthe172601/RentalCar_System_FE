@@ -13,85 +13,80 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-  resetForm!: FormGroup;
+  resetPasswordForm: FormGroup;
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  isResetMode = false;
-  token: string | null = null;
-  showPassword = false;
-
+  showPassword: boolean = false;
+  isResetMode: boolean = false;
+  
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.resetPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      newPassword: ['', [Validators.required, Validators.minLength(8)]]
+    });
+  }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.token = params['token'];
-      this.isResetMode = !!this.token;
-      this.initForm();
+      if (params['token']) {
+        this.isResetMode = true;
+      }
     });
   }
 
-  private initForm(): void {
-    if (this.isResetMode) {
-      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).*$/;
-      this.resetForm = this.fb.group({
-        newPassword: ['', [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(passwordPattern)
-        ]]
-      });
-    } else {
-      this.resetForm = this.fb.group({
-        email: ['', [Validators.required, Validators.email]]
-      });
+  getFormError(fieldName: string): string {
+    const control = this.resetPasswordForm.get(fieldName);
+    if (control?.errors) {
+      if (control.errors['required']) {
+        return fieldName === 'email' ? 'Vui lòng nhập email' : 'Vui lòng nhập mật khẩu mới';
+      }
+      if (control.errors['email']) {
+        return 'Email không hợp lệ';
+      }
+      if (control.errors['minlength']) {
+        return 'Mật khẩu phải có ít nhất 8 ký tự';
+      }
     }
+    return '';
   }
 
   onSubmit(): void {
-    if (this.resetForm.valid) {
+    if (this.resetPasswordForm.valid) {
       if (this.isResetMode) {
-        this.handleResetPassword();
+        const token = this.route.snapshot.queryParams['token'];
+        const newPassword = this.resetPasswordForm.get('newPassword')?.value;
+        
+        this.authService.resetPassword(token, newPassword).subscribe({
+          next: () => {
+            this.successMessage = 'Đổi mật khẩu thành công';
+            this.errorMessage = null;
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 2000);
+          },
+          error: (error) => {
+            this.errorMessage = error.error.message || 'Đổi mật khẩu thất bại. Vui lòng thử lại';
+            this.successMessage = null;
+          }
+        });
       } else {
-        this.handleForgotPassword();
+        const email = this.resetPasswordForm.get('email')?.value;
+        this.authService.forgotPassword(email).subscribe({
+          next: () => {
+            this.successMessage = 'Link đặt lại mật khẩu đã được gửi đến email của bạn';
+            this.errorMessage = null;
+          },
+          error: (error) => {
+            this.errorMessage = error.error.message || 'Gửi yêu cầu thất bại. Vui lòng thử lại';
+            this.successMessage = null;
+          }
+        });
       }
-    }
-  }
-
-  private handleForgotPassword(): void {
-    const { email } = this.resetForm.value;
-    this.authService.forgotPassword(email).subscribe({
-      next: (response) => {
-        this.successMessage = response.message;
-        this.errorMessage = null;
-      },
-      error: (error) => {
-        this.errorMessage = error.error.message;
-        this.successMessage = null;
-      }
-    });
-  }
-
-  private handleResetPassword(): void {
-    const { newPassword } = this.resetForm.value;
-    if (this.token) {
-      this.authService.resetPassword(this.token, newPassword).subscribe({
-        next: (response) => {
-          this.successMessage = response.message;
-          this.errorMessage = null;
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
-        },
-        error: (error) => {
-          this.errorMessage = error.error.message;
-          this.successMessage = null;
-        }
-      });
     }
   }
 
@@ -100,20 +95,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   isInvalid(fieldName: string): boolean {
-    const field = this.resetForm.get(fieldName);
+    const field = this.resetPasswordForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;
-  }
-
-  getFormError(fieldName: string): string {
-    const control = this.resetForm.get(fieldName);
-    if (control && control.errors) {
-      if (control.errors['required']) return 'This field is required';
-      if (control.errors['email']) return 'Invalid email format';
-      if (control.errors['minlength']) return 'Password must be at least 8 characters';
-      if (control.errors['pattern']) {
-        return 'Password must contain uppercase, lowercase, number and special character';
-      }
-    }
-    return '';
   }
 }

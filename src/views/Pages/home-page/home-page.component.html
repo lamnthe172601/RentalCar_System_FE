@@ -61,7 +61,7 @@
         <div class="input-field">
           <select name="car-make" id="car-make">
             <option value="all" style="display: none;">car make</option>
-            <option *ngFor="let car of carMakes" [value]="car.value">{{ car.name }}</option>
+            <!-- <option *ngFor="let car of carMakes" [value]="car.value">{{ car.name }}</option> -->
           </select>
           <label for="car-make" class="fa-solid fa-angle-down"></label>
         </div>
@@ -79,97 +79,34 @@
 
 <!-- ==================== Cars Area (Start) ==================== -->
 <section class="cars">
-
   <div class="heading">
-    <span>Our popular Cars</span>
-    <h2>featured Cars</h2>
-  </div>
-
+    <span>xe phổ biến của chúng tôi</span>
+    <h2>Xe nổi bật</h2>
+  </div> 
+   
   <div class="swiper-container car-slider">
     <div class="swiper-wrapper">
-
-      <div class="swiper-slide car-item">
+      <div *ngFor="let car of cars" class="swiper-slide car-item">
         <div class="image">
-          <img src=" assets/images/Cars/Cars/Car-1.jpg" alt="">
-          <div class="price">$100<span>/day</span></div>
+          <img [src]="getCarImageUrl(car)" [alt]="car.name">
+          <div class="price">{{car.price | number}}<span>/Ngày</span></div>
         </div>
         <div class="content">
-          <a href="pages/Cars/Single-Car.html"><h2>Porsche 911 Gt3</h2></a>
+          <a href="pages/Cars/Single-Car.html"><h2>{{car.name}}</h2></a>
           <div class="details">
-            <h3><i class="fa-solid fa-car"></i><span>2023</span></h3>
-            <h3><i class="fa-solid fa-user-group"></i><span>2 people</span></h3>
-            <h3><i class="fa-solid fa-suitcase-rolling"></i><span>1 luggage</span></h3>
-            <h3><i class="fa-solid fa-gear"></i><span>automatic</span></h3>
-            <h3><i class="fa-solid fa-gas-pump"></i><span>Petrol</span></h3>
-            <h3><i class="fa-solid fa-road"></i><span>7.4 kmpl</span></h3>
+            <h3><i class="fa-solid fa-car"></i><span>{{car.year}}</span></h3>
+            <h3><i class="fa-solid fa-user-group"></i><span>{{car.seats}} người</span></h3>
+            <h3><i class="fa-solid fa-suitcase-rolling"></i><span>{{car.model}}</span></h3>
+            <h3><i class="fa-solid fa-gear"></i><span>{{car.brand}}</span></h3>
+            <h3><i class="fa-solid fa-palette"></i><span>{{car.color}}</span></h3>
+            <h3><i class="fa-solid fa-road"></i><span>{{car.mileage}} km</span></h3>
           </div>
-          <a href="pages/Cars/Cart.html" class="btn">rent car</a>
+          <a href="pages/Cars/Cart.html" class="btn">Thuê xe</a>
         </div>
       </div>
-
-      <div class="swiper-slide car-item">
-        <div class="image">
-          <img src=" assets/images/Cars/Cars/Car-2.jpg" alt="">
-          <div class="price">$150<span>/day</span></div>
-        </div>
-        <div class="content">
-          <a href="pages/Cars/Single-Car.html"><h2>Infiiti Fx35</h2></a>
-          <div class="details">
-            <h3><i class="fa-solid fa-car"></i><span>2005</span></h3>
-            <h3><i class="fa-solid fa-user-group"></i><span>5 people</span></h3>
-            <h3><i class="fa-solid fa-suitcase-rolling"></i><span>1 luggage</span></h3>
-            <h3><i class="fa-solid fa-gear"></i><span>automatic</span></h3>
-            <h3><i class="fa-solid fa-gas-pump"></i><span>Electronic</span></h3>
-            <h3><i class="fa-solid fa-road"></i><span>7 kmpl</span></h3>
-          </div>
-          <a href="pages/Cars/Cart.html" class="btn">rent car</a>
-        </div>
-      </div>
-
-      <div class="swiper-slide car-item">
-        <div class="image">
-          <img src=" assets/images/Cars/Cars/Car-3.jpg" alt="">
-          <div class="price">$200<span>/day</span></div>
-        </div>
-        <div class="content">
-          <a href="pages/Cars/Single-Car.html"><h2>BMW M5 Sedan</h2></a>
-          <div class="details">
-            <h3><i class="fa-solid fa-car"></i><span>2023</span></h3>
-            <h3><i class="fa-solid fa-user-group"></i><span>5 people</span></h3>
-            <h3><i class="fa-solid fa-suitcase-rolling"></i><span>2 luggage</span></h3>
-            <h3><i class="fa-solid fa-gear"></i><span>automatic</span></h3>
-            <h3><i class="fa-solid fa-gas-pump"></i><span>Gasoline</span></h3>
-            <h3><i class="fa-solid fa-road"></i><span>9.12 kmpl</span></h3>
-          </div>
-          <a href="pages/Cars/Cart.html" class="btn">rent car</a>
-        </div>
-      </div>
-
-      <div class="swiper-slide car-item">
-        <div class="image">
-          <img src=" assets/images/Cars/Cars/Car-4.jpg" alt="">
-          <div class="price">$125<span>/day</span></div>
-        </div>
-        <div class="content">
-          <a href="pages/Cars/Single-Car.html"><h2>BMW X5</h2></a>
-          <div class="details">
-            <h3><i class="fa-solid fa-car"></i><span>2022</span></h3>
-            <h3><i class="fa-solid fa-user-group"></i><span>5 people</span></h3>
-            <h3><i class="fa-solid fa-suitcase-rolling"></i><span>3 luggage</span></h3>
-            <h3><i class="fa-solid fa-gear"></i><span>automatic</span></h3>
-            <h3><i class="fa-solid fa-gas-pump"></i><span>Gasoline</span></h3>
-            <h3><i class="fa-solid fa-road"></i><span>13.38 kmpl</span></h3>
-          </div>
-          <a href="pages/Cars/Cart.html" class="btn">rent car</a>
-        </div>
-      </div>
-
     </div>
-
     <div class="swiper-pagination swiper-pagination2"></div>
-
   </div>
-
 </section>
 <!-- ==================== Cars Area (End) ==================== -->
 
@@ -653,4 +590,3 @@
     </div>
 
   </section>
-

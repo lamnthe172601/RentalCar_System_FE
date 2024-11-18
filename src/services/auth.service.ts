@@ -4,6 +4,8 @@ import { catchError, Observable, throwError, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Auth, GoogleAuthProvider, signInWithPopup, UserCredential } from '@angular/fire/auth';
 import { CarRented } from '../models/car-rented.model';
+import { CartItemDto } from '../models/cart-item.model';
+import { rentCarRequest } from '../models/rent-car.model copy';
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +119,42 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+  getCartItems(): Observable<CartItemDto[]> {
+    const userId = this.getUserId();
+    if (userId) {
+      return this.apiService.getCartItems(userId).pipe(
+        catchError(this.handleError)
+      );
+    } else {
+      throw new Error('User ID is not available');
+    }
+  }
+  removeFromCart(cartId: string): Observable<any> {
+    const userId = this.getUserId();
+    if (userId) {
+      return this.apiService.removeFromCart(cartId, userId).pipe(
+        catchError(this.handleError)
+      );
+    } else {
+      throw new Error('User ID is not available');
+    }
+  }
+  rentCar(carId: string, rentalDate: Date, returnDate: Date): Observable<any> {
+    const userId = this.getUserId();
+    if (userId) {
+      const rentCarRequest: rentCarRequest = {
+        userId: userId,
+        carId: carId,
+        rentalDate: rentalDate,
+        returnDate: returnDate
+      };
+      return this.apiService.rentCar(rentCarRequest).pipe(
+        catchError(this.handleError)
+      );
+    } else {
+      throw new Error('User ID is not available');
+    }
+  }
   handleGetCars(): Observable<any> {
     return this.apiService.getCars();  
   }
@@ -196,5 +234,6 @@ export class AuthService {
   verifyEmail(token: string, email: string): Observable<any> {
     return this.apiService.verifyEmail({ token, email });
   }
+ 
 }
 

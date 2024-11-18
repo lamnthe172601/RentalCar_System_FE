@@ -4,6 +4,8 @@ import { data } from 'jquery';
 import { Observable } from 'rxjs';
 import { CarRented } from '../models/car-rented.model';
 import { ForgotPasswordRequest, ResetPasswordRequest, VerifyEmailRequest } from '../models/password.model';
+import { CartItemDto } from '../models/cart-item.model';
+import { rentCarRequest } from '../models/rent-car.model copy';
 
 @Injectable({
   providedIn: 'root'
@@ -61,11 +63,11 @@ export class ApiService {
     return URL.createObjectURL(blob);
   }
   getRentalContractsByUserId(userId: string, pageNumber: number, pageSize: number): Observable<{ data: CarRented[], totalItems: number }> {
-    const url = `https://localhost:44360/api/RentalContracts/user/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    const url = `${this.baseUrl}/RentalContracts/user/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get<{ data: CarRented[], totalItems: number }>(url, this.headerCustom);
   }
   cancelRentalContract(contractId: string): Observable<any> {
-    const url = `https://localhost:44360/api/RentalContracts/${contractId}/cancel`;
+    const url = `${this.baseUrl}/RentalContracts/${contractId}/cancel`;
     return this.http.post<any>(url, {}, this.headerCustom);
   }
   
@@ -89,5 +91,18 @@ export class ApiService {
 
   verifyEmail(data: VerifyEmailRequest): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/General/verify-email`, data);
+  }
+
+  getCartItems(userId: string): Observable<CartItemDto[]> {
+    const url = `${this.baseUrl}/Cart/${userId}`;
+    return this.http.get<CartItemDto[]>(url, this.headerCustom);
+  }
+  removeFromCart(cartId: string, userId: string): Observable<any> {
+    const url = `${this.baseUrl}/Cart/remove/${cartId}/${userId}`;
+    return this.http.delete<any>(url, this.headerCustom);
+  }
+  rentCar(rentCarRequest: rentCarRequest): Observable<any> {
+    const url = `${this.baseUrl}/Rental/rent`;
+    return this.http.post<any>(url, rentCarRequest, this.headerCustom);
   }
 }

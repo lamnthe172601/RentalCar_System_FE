@@ -13,6 +13,8 @@ import { ProfileComponent } from '../views/Pages/profile/profile.component';
 import { AuthLoginGuard } from '../guards/auth-login.guard';
 import { VerifyEmailComponent } from '../views/Pages/verify-email/verify-email.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { CartComponent } from '../views/Cars/cart/cart.component';
+import { CheckOutComponent } from '../views/check-out/check-out.component';
 
 export const routes: Routes = [
   {
@@ -90,7 +92,17 @@ export const routes: Routes = [
   {
     path: 'cart',
     title: 'Cart',
-    component: CarGridComponent,
+    component: CartComponent,
+    canActivate: [AuthGuard],
+    data: {
+        roles: ['customer']
+    }
+
+  }, 
+  {
+    path: 'checkout',
+    title: 'Checkout',
+    component: CheckOutComponent,
     canActivate: [AuthGuard],
     data: {
         roles: ['customer']

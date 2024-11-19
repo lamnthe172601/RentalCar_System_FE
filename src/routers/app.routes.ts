@@ -14,9 +14,9 @@ import { AuthLoginGuard } from '../guards/auth-login.guard';
 import { VerifyEmailComponent } from '../views/Pages/verify-email/verify-email.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { CartComponent } from '../views/Cars/cart/cart.component';
-import { CheckOutComponent } from '../views/check-out/check-out.component';
 import { EditCarComponent } from '../views/Cars/edit-car/edit-car.component';
 import { AdminCarComponent } from '../views/Cars/admin-car/admin-car.component';
+import { PaymentReturnComponent } from '../views/payment-return/payment-return.component';
 
 export const routes: Routes = [
   {
@@ -112,17 +112,11 @@ export const routes: Routes = [
         roles: ['customer']
     }
 
-  }, 
+  },
   {
-    path: 'checkout',
-    title: 'Checkout',
-    component: CheckOutComponent,
-    canActivate: [AuthGuard],
-    data: {
-        roles: ['customer']
-    }
-
-  }, 
+    path: 'payment-return',
+    component: PaymentReturnComponent
+  },
   { path: '', redirectTo: "/home", pathMatch: 'full' },
   { path: '**', redirectTo: "/access-denied" } // Chuyển hướng đến trang access-denied nếu URL không hợp lệ
 ];

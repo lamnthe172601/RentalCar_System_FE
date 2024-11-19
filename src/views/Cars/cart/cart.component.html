@@ -1,6 +1,4 @@
-<body> 
-
-  <!-- ==================== Scroll-Top Area (Start) ==================== -->
+<!-- ==================== Scroll-Top Area (Start) ==================== -->
   <a href="#" class="scroll-top">
     <i class="fas fa-long-arrow-alt-up"></i>
   </a>
@@ -62,4 +60,24 @@
     <!-- ========== Shopping-Cart Area (End) ========== -->
   </section>
   <!-- ==================== Cart Area (End) ==================== -->
-</body>
+
+<!-- Add this modal code before the closing </body> tag -->
+<div class="modal" *ngIf="showRentalInfoModal" (click)="closeModal()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Thông Tin Thuê Xe</h2>
+      <button type="button" class="close" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <h3>{{ selectedCar?.carName }}</h3>
+      <p><strong>Giá thuê:</strong> {{ selectedCar?.price }} vnd/day</p>
+      <p><strong>Ngày thuê:</strong> {{ selectedCar?.startDate | date }}</p>
+      <p><strong>Ngày trả:</strong> {{ selectedCar?.endDate | date }}</p>
+      <p><strong>Tổng tiền:</strong> {{ totalAmount }} vnd</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn" (click)="confirmRental()">Xác Nhận</button>
+      <button type="button" class="btn" (click)="closeModal()">Hủy</button>
+    </div>
+  </div>
+</div>

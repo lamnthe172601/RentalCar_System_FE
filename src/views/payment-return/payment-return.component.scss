@@ -1,0 +1,52 @@
+/* src/views/payment-return/payment-return.component.scss */
+.page-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.payment-return-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Ensure the container takes at least the full viewport height */
+  padding: 20px; /* Add some padding for better spacing */
+  box-sizing: border-box;
+}
+
+.payment-return {
+  background-color: #fff; /* White background for the content */
+  padding: 20px; /* Padding inside the content box */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visibility */
+  max-width: 600px; /* Max width for the content box */
+  width: 100%; /* Full width for smaller screens */
+  text-align: center; /* Center align text */
+}
+
+.loading {
+  font-size: 18px;
+  color: #333;
+}
+
+.success {
+  color: green; /* Green color for success messages */
+}
+
+.error {
+  color: red; /* Red color for error messages */
+}
+
+button {
+  margin-top: 20px; /* Space above the button */
+  padding: 10px 20px; /* Padding inside the button */
+  font-size: 16px; /* Font size for the button text */
+  color: #fff; /* White text color */
+  background-color: #007bff; /* Blue background color */
+  border: none; /* Remove default border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}

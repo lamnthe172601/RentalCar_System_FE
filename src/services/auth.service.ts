@@ -8,6 +8,8 @@ import { CartItemDto } from '../models/cart-item.model';
 import { rentCarRequest } from '../models/rent-car.model copy';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { VnPayRequestModel } from '../models/VnPayRequestModel.model';
+import { PaymentResponse } from '../models/payment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -144,20 +146,46 @@ export class AuthService {
   }
   rentCar(carId: string, rentalDate: Date, returnDate: Date): Observable<any> {
     const userId = this.getUserId();
-    if (userId) {
-      const rentCarRequest: rentCarRequest = {
+
+    if (!userId) {
+        return throwError(() => new Error('User ID is not available'));
+    }
+
+    const rentCarRequest: rentCarRequest = {
         userId: userId,
         carId: carId,
         rentalDate: rentalDate,
         returnDate: returnDate
-      };
-      return this.apiService.rentCar(rentCarRequest).pipe(
-        catchError(this.handleError)
-      );
-    } else {
-      throw new Error('User ID is not available');
-    }
-  }
+    };
+
+    return this.apiService.rentCar(rentCarRequest).pipe(
+        map(response => {
+            if (response && response.message === 'Rental request has been successfully processed.') {
+                return response;
+            } else {
+                throw new Error('Failed to rent the car');
+            }
+        }),
+        catchError(error => {
+            console.error('Error while renting the car:', error);
+            return throwError(() => new Error(error?.error?.message || 'An unexpected error occurred.'));
+        })
+    );
+}
+
+createPayment(contractId: string, amount: number): Observable<PaymentResponse> {
+  const paymentRequest: VnPayRequestModel = { contractId, amount };
+  return this.apiService.createPayment(paymentRequest).pipe(
+    map((response: any) => {
+      if (!response.url) {
+        throw new Error('Payment response does not contain a URL');
+      }
+      return response as PaymentResponse;
+    })
+  );
+}
+
+
   handleGetCars(): Observable<any> {
     return this.http.get(`${this.apiUrl}/all-car`);
   }

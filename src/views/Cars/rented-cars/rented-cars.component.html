@@ -45,7 +45,7 @@
            
             <div *ngFor="let car of rentalContracts" class="car-item">
                 <div class="image">
-                    <img [src]="car.imageUrls[0] || '../../assets/images/Cars/Cars/Car-1.jpg'" alt="Car Image">
+                    <img [src]="'data:image/jpeg;base64,' + car.imageUrls[0]" alt="Car Image">
                     <div class="price">{{ car.price }}VND<span>/day</span></div>
                 </div>
                 <div class="content">

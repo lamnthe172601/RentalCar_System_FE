@@ -8,6 +8,10 @@ import { CartItemDto } from '../models/cart-item.model';
 import { rentCarRequest } from '../models/rent-car.model copy';
 import { UserProfile } from 'firebase/auth';
 import { UpdateProfileRequest } from '../models/profile.model';
+import { RentalContractDto } from '../models/rental-contract.models';
+import { VnPayRequestModel } from '../models/VnPayRequestModel.model';
+import { PaymentResponse, PaymentReturnResponse } from '../models/payment.model';
+import { environment } from './environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +24,7 @@ export class ApiService {
     this.headerCustom = { headers: { "Authorization": "Bearer " + localStorage.getItem("token") } }
 
   }
-  private baseUrl = 'https://localhost:44360/api';
+  private baseUrl = environment.apiUrl;
   private imageBaseUrl = 'https://localhost:44360'; // Add this line
 
   // Add method to get full image URL
@@ -121,8 +125,14 @@ export class ApiService {
     const url = `${this.baseUrl}/Cart/remove/${cartId}/${userId}`;
     return this.http.delete<any>(url, this.headerCustom);
   }
-  rentCar(rentCarRequest: rentCarRequest): Observable<any> {
-    const url = `${this.baseUrl}/Rental/rent`;
-    return this.http.post<any>(url, rentCarRequest, this.headerCustom);
+  rentCar(request: any): Observable<{ message: string; data: RentalContractDto }> {
+    return this.http.post<{ message: string; data: RentalContractDto }>(`${this.baseUrl}/RentalContracts/rent`, request);
+  }
+  createPayment(request: VnPayRequestModel): Observable<PaymentResponse> {
+    return this.http.post<PaymentResponse>(`${this.baseUrl}/Payment/create-payment`, request);
+  }
+
+  verifyPayment(params: any): Observable<PaymentReturnResponse> {
+    return this.http.get<PaymentReturnResponse>(`${this.baseUrl}/Payment/return`, { params });
   }
 }

@@ -93,7 +93,7 @@ export const routes: Routes = [
   path: 'edit-car/:carId',
   title: 'Edit Car',
   component: EditCarComponent,
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard,RoleGuard],
   data: {
     roles: ['admin']
 } 
@@ -102,7 +102,7 @@ export const routes: Routes = [
   path: 'admin-car',
   title: 'Admin Car',
   component: AdminCarComponent,
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard,RoleGuard],
   data: {
     roles: ['admin']
 } 

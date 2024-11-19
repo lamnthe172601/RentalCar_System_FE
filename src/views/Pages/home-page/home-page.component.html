@@ -81,7 +81,7 @@
             <h3><i class="fa-solid fa-palette"></i><span>{{car.color}}</span></h3>
             <h3><i class="fa-solid fa-road"></i><span>{{car.mileage}} km</span></h3>
           </div>
-          <a href="pages/Cars/Cart.html" class="btn">Thuê xe</a>
+          <a href="#" (click)="addToCart(car.carId); $event.preventDefault();" class="btn">Thuê xe</a>
         </div>
       </div>
     </div>

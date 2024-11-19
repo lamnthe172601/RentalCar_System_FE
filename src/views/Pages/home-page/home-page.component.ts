@@ -49,4 +49,17 @@ export class HomePageComponent implements OnInit {
     // Return cached random image for this car
     return this.carImageMap.get(car.carId) || this.defaultCarImages[0];
   }
+  addToCart(carId: string): void {
+    console.log('Adding car to cart with ID:', carId);
+    this.authService.addToCart(carId).subscribe({
+      next: (response) => {
+        alert(response.message);
+      },
+      error: (error) => {
+        console.log(carId);
+        console.error('Error adding to cart:', error);
+        alert('Failed to add car to cart. Please try again.');
+      }
+    });
+  }
 }

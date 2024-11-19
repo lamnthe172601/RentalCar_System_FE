@@ -94,5 +94,18 @@ export class CarGridComponent implements OnInit {
 
     this.currentPage = 1; // Reset về trang đầu tiên sau khi sắp xếp
   }
+  addToCart(carId: string): void {
+    console.log('Adding car to cart with ID:', carId);
+    this.authService.addToCart(carId).subscribe({
+      next: (response) => {
+        alert(response.message);
+      },
+      error: (error) => {
+        console.log(carId);
+        console.error('Error adding to cart:', error);
+        alert('Failed to add car to cart. Please try again.');
+      }
+    });
+  }
 }
 

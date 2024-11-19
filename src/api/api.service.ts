@@ -127,6 +127,10 @@ export class ApiService {
     const url = `${this.baseUrl}/Cart/remove/${cartId}/${userId}`;
     return this.http.delete<any>(url, this.headerCustom);
   }
+  addToCart(userId: string, carId: string): Observable<{ message: string }> {
+    const url = `${this.baseUrl}/cart/add`;
+    return this.http.post<{ message: string }>(url, { userId, carId });
+  }
   rentCar(request: any): Observable<{ message: string; data: RentalContractDto }> {
     return this.http.post<{ message: string; data: RentalContractDto }>(`${this.baseUrl}/RentalContracts/rent`, request);
   }

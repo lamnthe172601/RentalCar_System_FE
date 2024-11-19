@@ -77,12 +77,12 @@ export class ApiService {
   }
   getCarById(carId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Car/${carId}`);
-    
   }
 
   
   updateCar(car: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/Car/edit-car`, car);
+    const id = car.get('id');
+    return this.http.put<any>(`${this.baseUrl}/Car/edit-car?id=${id}`, car);
   }
   deleteCar(carId: string): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/Car/delete-car/${carId}`);

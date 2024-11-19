@@ -1,50 +1,54 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { FormBuilder, FormGroup, Validators ,ReactiveFormsModule} from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+
 @Component({
   selector: 'app-edit-car',
   standalone: true,
-  imports: [CommonModule, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './edit-car.component.html',
   styleUrls: ['./edit-car.component.scss']
 })
 export class EditCarComponent implements OnInit {
-  carForm!: FormGroup;
+  carForm: FormGroup;
+  selectedFile: File | null = null;
+  imageUrl: string | null = null;
+  carId: string | null = null;
+  oldLicensePlate: string | null = null; // Lưu LicensePlate cũ
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private authService: AuthService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    // Initialize form with validation
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.carForm = this.fb.group({
-  name: ['', Validators.required],
-  licensePlate: ['', Validators.required],
-  brand: ['', Validators.required],
-  price: ['', Validators.required],
-  color: ['', Validators.required],
-  seats: ['', Validators.required],
-  year: ['', Validators.required],
-  madeIn: ['', Validators.required],
-  mileage: ['', Validators.required],
-  model: ['', Validators.required],
-  status: ['', Validators.required],
-  description: ['', Validators.required],
-});
+      name: ['', Validators.required],
+      licensePlate: ['', Validators.required],
+      brand: ['', Validators.required],
+      model: ['', Validators.required],
+      color: ['', Validators.required],
+      seats: ['', Validators.required],
+      year: ['', Validators.required],
+      madeIn: ['', Validators.required],
+      mileage: [0, Validators.required],
+      status: ['', Validators.required],
+      price: ['', Validators.required],
+      description: ['', Validators.required],
+      image: [null] // Add image field
+    });
 
     // Fetch car data by ID
-    const carId = this.route.snapshot.paramMap.get('carId');
-    if (carId) {
-      this.authService.getCarById(carId).subscribe(
+    this.carId = this.route.snapshot.paramMap.get('carId');
+    if (this.carId) {
+      this.authService.getCarById(this.carId).subscribe(
         (data: any) => {
           this.carForm.patchValue(data); // Populate form with data
+          this.imageUrl = data.imageUrl; // Store image URL
+          this.oldLicensePlate = data.licensePlate;
           console.log('Car data loaded:', this.carForm.value);
         },
         (error: any) => {
@@ -54,23 +58,61 @@ export class EditCarComponent implements OnInit {
     }
   }
 
+  ngOnInit(): void {}
+
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file; // Store the selected file
+      this.carForm.patchValue({
+        image: file
+      });
+
+      // Create a URL for the selected image to display it
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   onSave(): void {
     if (this.carForm.invalid) {
-      alert('Please fill in all required fields.');
+      // Mark all fields as touched to show validation errors
+      this.carForm.markAllAsTouched();
       return;
     }
-  
-    const carId = this.carForm.value;
-  
-    this.authService.updateCar(carId).subscribe({
-      next: () => {
-        alert('Car updated successfully!');
-        
+    if (!this.selectedFile) {
+      alert('Vui lòng chọn ảnh mới.');
+      return;
+    }
+    const formData = new FormData();
+    formData.append('id', this.carId!); // Add car ID to form data
+    formData.append('Name', this.carForm.get('name')?.value);
+    formData.append('LicensePlate', this.carForm.get('licensePlate')?.value);
+    formData.append('Brand', this.carForm.get('brand')?.value);
+    formData.append('Model', this.carForm.get('model')?.value);
+    formData.append('Color', this.carForm.get('color')?.value);
+    formData.append('Seats', this.carForm.get('seats')?.value);
+    formData.append('Year', this.carForm.get('year')?.value);
+    formData.append('MadeIn', this.carForm.get('madeIn')?.value);
+    formData.append('Mileage', this.carForm.get('mileage')?.value);
+    formData.append('Status', this.carForm.get('status')?.value);
+    formData.append('Price', this.carForm.get('price')?.value);
+    formData.append('Description', this.carForm.get('description')?.value);
+    if (this.selectedFile) {
+      formData.append('Image', this.selectedFile);
+    }
+
+    // Submit form data
+    this.authService.updateCar(formData).subscribe(
+      response => {
+        this.router.navigate(['admin-car']);
       },
-      error: (err) => {
-        console.error('Error updating car:', err);
-        alert('Failed to update car. Please try again!');
+      error => {
+        console.error('Error updating car:', error);
       }
-    });
+    );
   }
 }

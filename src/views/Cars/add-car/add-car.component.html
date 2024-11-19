@@ -1,122 +1,119 @@
-<!-- ==================== Page-Title (Start) ==================== -->
+<!-- ==================== Tiêu Đề Trang (Bắt Đầu) ==================== -->
 <div class="page-title">
-    <div class="title">
-      <h2>Add Car</h2>
-    </div>
-    <div class="link">
-      <a href="../../index-2.html"><i class="fa-solid fa-house-chimney"></i> Home</a>
-      <i class="fa-solid fa-angle-right"></i>
-      <span class="page">Add Car</span>
-    </div>
+  <div class="title">
+    <h2>Thêm Xe</h2>
   </div>
-  <!-- ==================== Page-Title (End) ==================== -->
-  
-  <!-- ==================== Add-Car Form (Start) ==================== -->
-  <section class="add-car">
-  
-  <!-- Upload file Brand & Model -->
-  <div>
-    <label for="excel-brand-model">Upload Brand & Model Excel:</label>
-    <input
-      id="excel-brand-model"
-      type="file"
-      (change)="onFileChange($event, 'brandModel')"
-      accept=".xlsx, .xls"
-    />
+  <div class="link">
+    <a href="../../index-2.html"><i class="fa-solid fa-house-chimney"></i> Trang Chủ</a>
+    <i class="fa-solid fa-angle-right"></i>
+    <span class="page">Thêm Xe</span>
   </div>
+</div>
+<!-- ==================== Tiêu Đề Trang (Kết Thúc) ==================== -->
 
-  <!-- Upload file Color -->
-  <div>
-    <label for="excel-color">Upload Color Excel:</label>
-    <input
-      id="excel-color"
-      type="file"
-      (change)="onFileChange($event, 'color')"
-      accept=".xlsx, .xls"
-    />
-  </div>
-    <h4>Add a New Car</h4>
+<!-- ==================== Form Thêm Xe (Bắt Đầu) ==================== -->
+<section class="add-car">
+
+<!-- Tải Tệp Excel Thương Hiệu & Mẫu -->
+<div>
+  <label for="excel-brand-model">Tải Tệp Excel Thương Hiệu & Mẫu:</label>
+  <input
+    id="excel-brand-model"
+    type="file"
+    (change)="onFileChange($event, 'brandModel')"
+    accept=".xlsx, .xls"
+  />
+</div>
+
+<!-- Tải Tệp Excel Màu -->
+<div>
+  <label for="excel-color">Tải Tệp Excel Màu:</label>
+  <input
+    id="excel-color"
+    type="file"
+    (change)="onFileChange($event, 'color')"
+    accept=".xlsx, .xls"
+  />
+</div>
+
+<h4>Thêm Xe Mới</h4>
+
+<div class="form-container">
+    <form [formGroup]="addCarForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <h2>Thêm Xe Mới</h2>
+      <div class="form-group">
+        <label for="name">Tên Xe:</label>
+        <input id="name" formControlName="name" placeholder="Nhập tên xe" />
+      </div>
   
-    <div class="form-container">
-      <form [formGroup]="addCarForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-        <h2>Add New Car</h2>
-        <div class="form-group">
-          <label for="name">Car Name:</label>
-          <input id="name" formControlName="name" placeholder="Enter car name" />
-        </div>
-    
-        <div class="form-group">
-          <label for="licensePlate">License Plate:</label>
-          <input id="licensePlate" formControlName="licensePlate" placeholder="Enter license plate" />
-        </div>
-    
-        <div class="form-group">
-          <label for="brand">Brand:</label>
-          <select id="brand" formControlName="brand" (change)="onBrandChange($event)">
-            <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
-          </select>
-        </div>
-    
-        <div class="form-group">
-          <label for="model">Model:</label>
-          <select id="model" formControlName="model">
-            <option *ngFor="let model of filteredModels" [value]="model">{{ model }}</option>
-          </select>
-        </div>
-    
-        <div class="form-group">
-          <label for="color">Color:</label>
-          <select id="color" formControlName="color">
-            <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
-          </select>
-        </div>
-    
-        <div class="form-group">
-          <label for="seats">Seats:</label>
-          <input id="seats" formControlName="seats" type="number" placeholder="Enter number of seats" />
-        </div>
-    
-        <div class="form-group">
-          <label for="year">Year:</label>
-          <input id="year" formControlName="year" type="number" placeholder="Enter manufacturing year" />
-        </div>
-    
-        <div class="form-group">
-          <label for="madeIn">Made In:</label>
-          <input id="madeIn" formControlName="madeIn" placeholder="Enter country of origin" />
-        </div>
-    
-        <div class="form-group">
-          <label for="mileage">Mileage:</label>
-          <input id="mileage" formControlName="mileage" type="number" placeholder="Enter mileage" />
-        </div>
-    
-        <div class="form-group">
-          <label for="status">Status:</label>
-          <input id="status" formControlName="status" placeholder="Enter car status" />
-        </div>
-    
-        <div class="form-group">
-          <label for="price">Price:</label>
-          <input id="price" formControlName="price" type="number" placeholder="Enter price" />
-        </div>
-    
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea id="description" formControlName="description" placeholder="Enter description"></textarea>
-        </div>
-    
-        <div class="form-group">
-          <label for="image">Image:</label>
-          <input id="image" type="file" (change)="onFileSelected($event)" />
-        </div>
-    
-        <button type="submit" class="submit-button">Add Car</button>
-      </form>
-    </div>
-    
-    
+      <div class="form-group">
+        <label for="licensePlate">Biển Số Xe:</label>
+        <input id="licensePlate" formControlName="licensePlate" placeholder="Nhập biển số xe" />
+      </div>
   
-  </section>
-  <!-- ==================== Add-Car Form (End) ==================== -->
+      <div class="form-group">
+        <label for="brand">Thương Hiệu:</label>
+        <select id="brand" formControlName="brand" (change)="onBrandChange($event)">
+          <option *ngFor="let brand of brands" [value]="brand">{{ brand }}</option>
+        </select>
+      </div>
   
+      <div class="form-group">
+        <label for="model">Mẫu Xe:</label>
+        <select id="model" formControlName="model">
+          <option *ngFor="let model of filteredModels" [value]="model">{{ model }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="color">Màu Sắc:</label>
+        <select id="color" formControlName="color">
+          <option *ngFor="let color of colors" [value]="color">{{ color }}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="seats">Số Chỗ Ngồi:</label>
+        <input id="seats" formControlName="seats" type="number" placeholder="Nhập số chỗ ngồi" />
+      </div>
+  
+      <div class="form-group">
+        <label for="year">Năm Sản Xuất:</label>
+        <input id="year" formControlName="year" type="number" placeholder="Nhập năm sản xuất" />
+      </div>
+  
+      <div class="form-group">
+        <label for="madeIn">Xuất Xứ:</label>
+        <input id="madeIn" formControlName="madeIn" placeholder="Nhập quốc gia sản xuất" />
+      </div>
+  
+      <div class="form-group">
+        <label for="mileage">Số Km Đã Đi:</label>
+        <input id="mileage" formControlName="mileage" type="number" placeholder="Nhập số km đã đi" />
+      </div>
+  
+      <div class="form-group">
+        <label for="status">Tình Trạng Xe:</label>
+        <input id="status" formControlName="status" placeholder="Nhập tình trạng xe" />
+      </div>
+  
+      <div class="form-group">
+        <label for="price">Giá Bán:</label>
+        <input id="price" formControlName="price" type="number" placeholder="Nhập giá bán" />
+      </div>
+  
+      <div class="form-group">
+        <label for="description">Mô Tả:</label>
+        <textarea id="description" formControlName="description" placeholder="Nhập mô tả"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="image">Hình Ảnh:</label>
+        <input id="image" type="file" (change)="onFileSelected($event)" />
+      </div>
+  
+      <button type="submit" class="submit-button">Thêm Xe</button>
+    </form>
+</div>
+</section>
+<!-- ==================== Form Thêm Xe (Kết Thúc) ==================== -->

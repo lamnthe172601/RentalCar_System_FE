@@ -1,100 +1,105 @@
 <div class="edit-car-container">
-  <h2>Edit Car</h2>
+  <h2>Chỉnh Sửa Xe</h2>
   <form [formGroup]="carForm" (ngSubmit)="onSave()">
     <div>
-      <label for="name">Name:</label>
+      <label for="name">Tên Xe:</label>
       <input id="name" formControlName="name" />
       <div *ngIf="carForm.get('name')?.invalid && carForm.get('name')?.touched">
-        Name is required.
+        Tên xe là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="licensePlate">License Plate:</label>
+      <label for="licensePlate">Biển Số Xe:</label>
       <input id="licensePlate" formControlName="licensePlate" />
       <div *ngIf="carForm.get('licensePlate')?.invalid && carForm.get('licensePlate')?.touched">
-        License Plate is required.
+        Biển số xe là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="brand">Brand:</label>
+      <label for="brand">Thương Hiệu:</label>
       <input id="brand" formControlName="brand" />
       <div *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched">
-        Brand is required.
+        Thương hiệu là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="price">Price:</label>
+      <label for="price">Giá:</label>
       <input id="price" formControlName="price" />
       <div *ngIf="carForm.get('price')?.invalid && carForm.get('price')?.touched">
-        Price is required.
+        Giá là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="color">Color:</label>
+      <label for="color">Màu Sắc:</label>
       <input id="color" formControlName="color" />
       <div *ngIf="carForm.get('color')?.invalid && carForm.get('color')?.touched">
-        Color is required.
+        Màu sắc là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="seats">Seats:</label>
+      <label for="seats">Số Chỗ Ngồi:</label>
       <input id="seats" formControlName="seats" />
       <div *ngIf="carForm.get('seats')?.invalid && carForm.get('seats')?.touched">
-        Seats are required.
+        Số chỗ ngồi là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="year">Year:</label>
+      <label for="year">Năm Sản Xuất:</label>
       <input id="year" formControlName="year" />
       <div *ngIf="carForm.get('year')?.invalid && carForm.get('year')?.touched">
-        Year is required.
+        Năm sản xuất là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="madeIn">Made In:</label>
+      <label for="madeIn">Xuất Xứ:</label>
       <input id="madeIn" formControlName="madeIn" />
       <div *ngIf="carForm.get('madeIn')?.invalid && carForm.get('madeIn')?.touched">
-        Made In is required.
+        Xuất xứ là bắt buộc.
       </div>
     </div>
 
     <div>
-      <label for="mileage">Mileage:</label>
+      <label for="mileage">Số Km Đã Đi:</label>
       <input id="mileage" formControlName="mileage" />
       <div *ngIf="carForm.get('mileage')?.invalid && carForm.get('mileage')?.touched">
-        Mileage is required.
+        Số km đã đi là bắt buộc.
       </div>
     </div>
+
     <div>
-      <label for="description">Description:</label>
+      <label for="description">Mô Tả:</label>
       <input id="description" formControlName="description" />
       <div *ngIf="carForm.get('description')?.invalid && carForm.get('description')?.touched">
-        Description is required.
+        Mô tả là bắt buộc.
       </div>
     </div>
     
     <div>
-      <label for="status">Status:</label>
+      <label for="status">Tình Trạng Xe:</label>
       <input id="status" formControlName="status" />
       <div *ngIf="carForm.get('status')?.invalid && carForm.get('status')?.touched">
-        Status is required.
+        Tình trạng xe là bắt buộc.
       </div>
     </div>
     
     <div>
-      <label for="model">Model:</label>
+      <label for="model">Mẫu Xe:</label>
       <input id="model" formControlName="model" />
       <div *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched">
-        Model is required.
+        Mẫu xe là bắt buộc.
       </div>
     </div>
-    <button type="submit" [disabled]="carForm.invalid">Save</button>
+    <div>
+      <label for="image">Hình Ảnh:</label>
+      <input type="file" id="image" (change)="onFileChange($event)" />
+    </div>
+    <button type="submit" [disabled]="carForm.invalid">Lưu</button>
   </form>
 </div>

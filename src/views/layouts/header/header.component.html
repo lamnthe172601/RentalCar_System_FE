@@ -41,22 +41,11 @@
           <a class="nav-btn" routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">home</a>
 
 
-          <!-- <div class="dropdown-menu">
-            <button class="nav-btn">about <i class="fas fa-angle-down"></i> </button>
-            <div class="dropdown-content">
-              <a href="pages/About/About.html">about us</a>
-              <a href="pages/About/Team.html">team</a>
-              <a href="pages/About/Testimonials.html">testimonials</a>
-              <a href="pages/About/Faqs.html">faqs</a>
-            </div>
-          </div> -->
-
+       
          <div class="dropdown-menu">
   <button class="nav-btn">Trang <i class="fas fa-angle-down"></i></button>
   <div class="dropdown-content">
-    <a href="pages/Pages/Services.html">Dịch Vụ</a>
-    <a href="pages/Pages/Single-Service.html">Chi Tiết Dịch Vụ</a>
-    <a href="pages/Pages/Gallery.html">Thư Viện Ảnh</a>
+   
     <a *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Nhập</a>
     <a *ngIf="!authService.isLoggedIn()" routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Ký</a>
     <a *ngIf="!authService.isLoggedIn()" routerLink="/reset-password" routerLinkActive="active" ariaCurrentWhenActive="page">Quên Mật Khẩu</a>
@@ -75,22 +64,13 @@
               <a *ngIf="authService.isLoggedIn()"  routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">car grid</a>
               
               <a *ngIf="authService.isLoggedIn()"  routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">Add Car</a>
+              <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Danh Sách Xe Đang Thuê</a>           
+              <a *ngIf="authService.isLoggedIn()"  routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
+              <a *ngIf="authService.isLoggedIn()"  routerLink="/edit-car" routerLinkActive="active" ariaCurrentWhenActive="page">Edit Car</a>
               <a *ngIf="authService.isLoggedIn()"  routerLink="/admin-car" routerLinkActive="active" ariaCurrentWhenActive="page">Admin Car</a>
-              <a href="pages/Cars/Cart.html">cart</a>
-              <a href="pages/Cars/Checkout.html">checkout</a>
             </div>
           </div>
-
-          <!-- <div class="dropdown-menu">
-            <button class="nav-btn">blog <i class="fas fa-angle-down"></i> </button>
-            <div class="dropdown-content">
-              <a href="pages/Blog/Blog-Grid.html">blogs grid</a>
-              <a href="pages/Blog/Blog-List.html">blogs list</a>
-              <a href="pages/Blog/Single-Blog.html">single blog</a>
-            </div>
-          </div> -->
-
-          <!-- <a class="nav-btn" href="pages/Contact/contact.html">contact</a> -->
+        
 
         </nav>
 
@@ -114,26 +94,14 @@
         <div class="main-nav-link"> <a class="nav-btn" routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">home</a> </div>
       </div>
 
-      <!-- <div class="nav-link">
-        <div class="main-nav-link">
-          <div class="nav-btn">about</div> <i class="fas fa-plus"></i>
-        </div>
-        <div class="sub-nav-link">
-          <a href="pages/About/About.html">about us</a>
-          <a href="pages/About/Team.html">team</a>
-          <a href="pages/About/Testimonials.html">testimonials</a>
-          <a href="pages/About/Faqs.html">faqs</a>
-        </div>
-      </div> -->
+    
 
       <div class="nav-link">
         <div class="main-nav-link">
           <div class="nav-btn">pages</div> <i class="fas fa-plus"></i>
         </div>
         <div class="sub-nav-link">
-          <a href="pages/Pages/Services.html">Dịch Vụ</a>
-          <a href="pages/Pages/Single-Service.html">Chi Tiết Dịch Vụ</a>
-          <a href="pages/Pages/Gallery.html">Thư Viện Ảnh</a>
+         
           <a  *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Nhập</a>
           <a *ngIf="!authService.isLoggedIn()" routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Ký</a>
           <a *ngIf="!authService.isLoggedIn()" routerLink="/reset-password" routerLinkActive="active" ariaCurrentWhenActive="page">Quên Mật Khẩu</a>
@@ -149,28 +117,17 @@
         </div>
         <div class="sub-nav-link">
           <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Xe Đã Thuê</a>
-          <a href="pages/Cars/Car-Grid.html">Danh Sách Xe</a>
-          <a href="pages/Cars/Car-List.html">Xem Dạng Lưới</a>
-          <a href="pages/Cars/Single-Car.html">Chi Tiết Xe</a>
-          <a href="pages/Cars/Cart.html">Giỏ Hàng</a>
-          <a href="pages/Cars/Checkout.html">Thanh Toán</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">car grid</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">Add Car</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Danh Sách Xe Đang Thuê</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/edit-car" routerLinkActive="active" ariaCurrentWhenActive="page">Edit Car</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/admin-car" routerLinkActive="active" ariaCurrentWhenActive="page">Admin Car</a>
+
         </div>
       </div>
 
-      <!-- <div class="nav-link">
-        <div class="main-nav-link">
-          <div class="nav-btn">blog</div> <i class="fas fa-plus"></i>
-        </div>
-        <div class="sub-nav-link">
-          <a href="pages/Blog/Blog-Grid.html">blogs grid</a>
-          <a href="pages/Blog/Blog-List.html">blogs list</a>
-          <a href="pages/Blog/Single-Blog.html">single blog</a>
-        </div>
-      </div> -->
-
-      <!-- <div class="nav-link">
-        <div class="main-nav-link"> <a class="nav-btn" href="pages/Contact/contact.html">contact</a> </div>
-      </div> -->
+      
 
     </nav>
 

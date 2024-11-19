@@ -13,9 +13,11 @@ import { ProfileComponent } from '../views/Pages/profile/profile.component';
 import { AuthLoginGuard } from '../guards/auth-login.guard';
 import { VerifyEmailComponent } from '../views/Pages/verify-email/verify-email.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { CartComponent } from '../views/Cars/cart/cart.component';
 import { EditCarComponent } from '../views/Cars/edit-car/edit-car.component';
 import { AdminCarComponent } from '../views/Cars/admin-car/admin-car.component';
 import { RoleGuard } from '../guards/role.guard';
+import { PaymentReturnComponent } from '../views/payment-return/payment-return.component';
 
 export const routes: Routes = [
   {
@@ -67,7 +69,8 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
         roles: ['customer']
-    }  
+    }
+      
   },
   {
     path: 'car-grid',
@@ -109,6 +112,20 @@ export const routes: Routes = [
     path: 'verify-email',
     title: 'Verify Email',
     component: VerifyEmailComponent,
+  },
+  {
+    path: 'cart',
+    title: 'Cart',
+    component: CartComponent,
+    canActivate: [AuthGuard],
+    data: {
+        roles: ['customer']
+    }
+
+  },
+  {
+    path: 'payment-return',
+    component: PaymentReturnComponent
   },
   { path: '', redirectTo: "/home", pathMatch: 'full' },
   { path: '**', redirectTo: "/access-denied" } // Chuyển hướng đến trang access-denied nếu URL không hợp lệ

@@ -1,0 +1,33 @@
+<div class="page-title">
+  <div class="title">
+    <h2>Payment Return</h2>
+  </div>
+  <div class="link">
+    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><i class="fa-solid fa-house-chimney"></i> Home</a>
+    <i class="fa-solid fa-angle-right"></i>
+    <span class="page">Payment</span>
+  </div>
+</div>
+
+<!-- src/views/payment-return/payment-return.component.html -->
+<div class="payment-return-container">
+  <div class="payment-return">
+    <div *ngIf="loading" class="loading">Processing payment...</div>
+    <div *ngIf="!loading">
+      <div *ngIf="success" class="success">
+        <h2>Payment Successful!</h2>
+        <p>{{ message }}</p>
+        <p><strong>Contract ID:</strong> {{ contractId }}</p>
+        <p><strong>Amount:</strong> {{ amount }}</p>
+        <p><strong>Payment Date:</strong> {{ paymentDate }}</p>
+      </div>
+      <div *ngIf="!success" class="error">
+        <h2>Payment Failed</h2>
+        <p>{{ message }}</p>
+        <p><strong>Contract ID:</strong> {{ contractId }}</p>
+        <p><strong>Amount:</strong> {{ amount }}</p>
+      </div>
+      <button (click)="returnToCart()">Return to Cart</button>
+    </div>
+  </div>
+</div>

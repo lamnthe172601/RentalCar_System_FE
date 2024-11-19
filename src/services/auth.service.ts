@@ -4,8 +4,12 @@ import { catchError, Observable, throwError, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { Auth, GoogleAuthProvider, signInWithPopup, UserCredential } from '@angular/fire/auth';
 import { CarRented } from '../models/car-rented.model';
+import { CartItemDto } from '../models/cart-item.model';
+import { rentCarRequest } from '../models/rent-car.model copy';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { VnPayRequestModel } from '../models/VnPayRequestModel.model';
+import { PaymentResponse } from '../models/payment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -126,6 +130,68 @@ export class AuthService {
       catchError(this.handleError)
     );
   }
+  getCartItems(): Observable<CartItemDto[]> {
+    const userId = this.getUserId();
+    if (userId) {
+      return this.apiService.getCartItems(userId).pipe(
+        catchError(this.handleError)
+      );
+    } else {
+      throw new Error('User ID is not available');
+    }
+  }
+  removeFromCart(cartId: string): Observable<any> {
+    const userId = this.getUserId();
+    if (userId) {
+      return this.apiService.removeFromCart(cartId, userId).pipe(
+        catchError(this.handleError)
+      );
+    } else {
+      throw new Error('User ID is not available');
+    }
+  }
+  rentCar(carId: string, rentalDate: Date, returnDate: Date): Observable<any> {
+    const userId = this.getUserId();
+
+    if (!userId) {
+        return throwError(() => new Error('User ID is not available'));
+    }
+
+    const rentCarRequest: rentCarRequest = {
+        userId: userId,
+        carId: carId,
+        rentalDate: rentalDate,
+        returnDate: returnDate
+    };
+
+    return this.apiService.rentCar(rentCarRequest).pipe(
+        map(response => {
+            if (response && response.message === 'Rental request has been successfully processed.') {
+                return response;
+            } else {
+                throw new Error('Failed to rent the car');
+            }
+        }),
+        catchError(error => {
+            console.error('Error while renting the car:', error);
+            return throwError(() => new Error(error?.error?.message || 'An unexpected error occurred.'));
+        })
+    );
+}
+
+createPayment(contractId: string, amount: number): Observable<PaymentResponse> {
+  const paymentRequest: VnPayRequestModel = { contractId, amount };
+  return this.apiService.createPayment(paymentRequest).pipe(
+    map((response: any) => {
+      if (!response.url) {
+        throw new Error('Payment response does not contain a URL');
+      }
+      return response as PaymentResponse;
+    })
+  );
+}
+
+
   handleGetCars(): Observable<any> {
     return this.http.get(`${this.apiUrl}/all-car`);
   }

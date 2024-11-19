@@ -4,8 +4,14 @@ import { data } from 'jquery';
 import { Observable } from 'rxjs';
 import { CarRented } from '../models/car-rented.model';
 import { ForgotPasswordRequest, ResetPasswordRequest, VerifyEmailRequest } from '../models/password.model';
+import { CartItemDto } from '../models/cart-item.model';
+import { rentCarRequest } from '../models/rent-car.model copy';
 import { UserProfile } from 'firebase/auth';
 import { UpdateProfileRequest } from '../models/profile.model';
+import { RentalContractDto } from '../models/rental-contract.models';
+import { VnPayRequestModel } from '../models/VnPayRequestModel.model';
+import { PaymentResponse, PaymentReturnResponse } from '../models/payment.model';
+import { environment } from './environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +24,7 @@ export class ApiService {
     this.headerCustom = { headers: { "Authorization": "Bearer " + localStorage.getItem("token") } }
 
   }
-  private baseUrl = 'https://localhost:44360/api';
+  private baseUrl = environment.apiUrl;
   private imageBaseUrl = 'https://localhost:44360'; // Add this line
 
   // Add method to get full image URL
@@ -72,11 +78,11 @@ export class ApiService {
     return URL.createObjectURL(blob);
   }
   getRentalContractsByUserId(userId: string, pageNumber: number, pageSize: number): Observable<{ data: CarRented[], totalItems: number }> {
-    const url = `https://localhost:44360/api/RentalContracts/user/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    const url = `${this.baseUrl}/RentalContracts/user/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     return this.http.get<{ data: CarRented[], totalItems: number }>(url, this.headerCustom);
   }
   cancelRentalContract(contractId: string): Observable<any> {
-    const url = `https://localhost:44360/api/RentalContracts/${contractId}/cancel`;
+    const url = `${this.baseUrl}/RentalContracts/${contractId}/cancel`;
     return this.http.post<any>(url, {}, this.headerCustom);
   }
   
@@ -111,5 +117,24 @@ export class ApiService {
 
   verifyEmail(data: VerifyEmailRequest): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/General/verify-email`, data);
+  }
+
+  getCartItems(userId: string): Observable<CartItemDto[]> {
+    const url = `${this.baseUrl}/Cart/${userId}`;
+    return this.http.get<CartItemDto[]>(url, this.headerCustom);
+  }
+  removeFromCart(cartId: string, userId: string): Observable<any> {
+    const url = `${this.baseUrl}/Cart/remove/${cartId}/${userId}`;
+    return this.http.delete<any>(url, this.headerCustom);
+  }
+  rentCar(request: any): Observable<{ message: string; data: RentalContractDto }> {
+    return this.http.post<{ message: string; data: RentalContractDto }>(`${this.baseUrl}/RentalContracts/rent`, request);
+  }
+  createPayment(request: VnPayRequestModel): Observable<PaymentResponse> {
+    return this.http.post<PaymentResponse>(`${this.baseUrl}/Payment/create-payment`, request);
+  }
+
+  verifyPayment(params: any): Observable<PaymentReturnResponse> {
+    return this.http.get<PaymentReturnResponse>(`${this.baseUrl}/Payment/return`, { params });
   }
 }

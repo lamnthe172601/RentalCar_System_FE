@@ -144,6 +144,16 @@ export class AuthService {
       throw new Error('User ID is not available');
     }
   }
+  addToCart(carId: string): Observable<{ message: string }> {
+    const userId = this.getUserId();
+    if (userId) {
+      return this.apiService.addToCart(userId, carId).pipe(
+        catchError(this.handleError)
+      );
+    } else {
+      return throwError(() => new Error('User ID is not available'));
+    }
+  }
   rentCar(carId: string, rentalDate: Date, returnDate: Date): Observable<any> {
     const userId = this.getUserId();
 

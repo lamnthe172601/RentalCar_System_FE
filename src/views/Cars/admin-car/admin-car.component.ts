@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-car',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,],
   templateUrl: './admin-car.component.html',
   styleUrl: './admin-car.component.scss'
 })
@@ -14,20 +15,20 @@ export class AdminCarComponent implements OnInit {
   currentPage: number = 1; // Trang hiện tại
   itemsPerPage: number = 6; // Số xe trên mỗi trang
   currentSort: string = 'default'; // Tiêu chí sắp xếp hiện tại
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    // Gọi phương thức handleGetCars() từ AuthService
+    this.loadCars();
+  }
+
+  loadCars(): void {
     this.authService.handleGetCars().subscribe(
-      (data: any) => {  // Khai báo kiểu dữ liệu cho 'data'
-        this.cars = data;  // Gán dữ liệu xe nhận được vào mảng cars
-        console.log('Danh sách xe:', data);
-        this.cars.forEach(car => {
-          console.log('Car price:', car.price);
-        });
+      (data: any) => {
+        this.cars = data;
+        console.log(this.cars); // Kiểm tra dữ liệu xe
       },
-      (error: any) => {  // Khai báo kiểu dữ liệu cho 'error'
-        console.error('Lỗi khi lấy dữ liệu xe:', error);  // Xử lý lỗi nếu có
+      (error: any) => {
+        console.error('Error fetching cars:', error);
       }
     );
   }
@@ -41,6 +42,38 @@ export class AdminCarComponent implements OnInit {
     }
     return 'path/to/default/image.jpg'; // Ảnh mặc định
   }
+  onDeleteCar(carId: string): void {
+    if (!carId) {
+      console.error('Car ID is undefined');
+      return;
+    }
+
+    const confirmed = confirm('Are you sure you want to delete this car?');
+    if (!confirmed) {
+      return;
+    }
+
+    this.authService.deleteCar(carId).subscribe({
+      next: () => {
+        this.loadCars();
+        this.cars = this.cars.filter(car => car.id !== carId);
+        alert('Car deleted successfully!');
+      },
+      error: (err) => {
+        console.error('Error deleting car:', err);
+        alert('Failed to delete car, please try again!');
+      }
+    });
+  }
+  onEditCar(carId: string): void {
+    if (!carId) {
+      console.error('Car ID is undefined');
+      return;
+    }
+
+    this.router.navigate(['/edit-car', carId]);
+  }
+
   // Tổng số trang
   get totalPages() {
     return Math.ceil(this.cars.length / this.itemsPerPage);

@@ -83,7 +83,7 @@ export const routes: Routes = [
    canActivate: [AuthGuard] // Add guard if needed
  },
  {
-  path: 'edit-car',
+  path: 'edit-car/:carId',
   title: 'Edit Car',
   component: EditCarComponent,
   canActivate: [AuthGuard] // Add guard if needed

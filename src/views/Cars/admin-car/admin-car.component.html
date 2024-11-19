@@ -19,7 +19,7 @@
 
     <!-- Thêm xe mới -->
     <div class="add-product">
-        <button class="btn" onclick="window.location.href='add-product.html'">Thêm Xe Mới</button>
+        <button class="btn" routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">>Thêm Xe Mới</button>
     </div>
 </section>   
 <!-- ==================== Khu Vực Tìm Kiếm và Quản Lý Sản Phẩm (Kết Thúc) ==================== -->
@@ -62,8 +62,8 @@
                     <p>Quá trình sử dụng: {{ car.mileage }} km</p>
                 </div>
                 <div class="actions">
-                    <a href="edit-product.html?carId={{ car.id }}" class="btn">Sửa</a>
-                    <a href="delete-product.html?carId={{ car.id }}" class="btn">Xóa</a>
+                    <button (click)="onEditCar(car.carId)" class="btn">Edit</button>
+                    <button (click)="onDeleteCar(car.carId)" class="btn">Xóa</button>
                 </div>
             </div>
         </div>

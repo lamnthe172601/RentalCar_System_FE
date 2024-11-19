@@ -190,15 +190,14 @@ export class AuthService {
   }
   deleteCar(carId: string): Observable<any> {
     return this.apiService.deleteCar(carId).pipe(
-      catchError((error) => {
-        console.error('Error deleting car:', error);
-        return throwError(() => new Error('Failed to delete car.'));
-      })
+      catchError(this.handleError)
     );
   }
   // Cập nhật thông tin của một chiếc xe
-  updateCar(carId: string, carData: any): Observable<any> {
-    return this.apiService.updateCar(carId, carData);
+  updateCar(car: any): Observable<any> {
+    return this.apiService.updateCar(car).pipe(
+      catchError(this.handleError)
+    );
   }
   
   forgotPassword(email: string): Observable<any> {

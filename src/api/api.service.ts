@@ -75,15 +75,17 @@ export class ApiService {
   addCar(carData: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/Car/add-car`, carData);
   }
-  getCarById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/Car/get-car/${id}`);
+  getCarById(carId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/Car/${carId}`);
+    
   }
 
-  updateCar(carId: string, carData: any): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/Car/edit-car/${carId}`, carData);
+  
+  updateCar(car: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/Car/edit-car`, car);
   }
-  deleteCar(carData: any): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/Car/id`, carData);
+  deleteCar(carId: string): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/Car/delete-car/${carId}`);
   }
   searchCar(query: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Car/search-car?query=${query}`, this.headerCustom);

@@ -74,8 +74,8 @@
 
               <a *ngIf="authService.isLoggedIn()"  routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">car grid</a>
               
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">Add Car</a>
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/admin-car" routerLinkActive="active" ariaCurrentWhenActive="page">Admin Car</a>
+              <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/add-car" routerLinkActive="active">Add Car</a>
+              <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/admin-car" routerLinkActive="active">Admin Car</a>
               <a href="pages/Cars/Cart.html">cart</a>
               <a href="pages/Cars/Checkout.html">checkout</a>
             </div>

@@ -17,14 +17,14 @@
       <div *ngIf="success" class="success">
         <h2>Payment Successful!</h2>
         <p>{{ message }}</p>
-        <p><strong>Order ID:</strong> {{ orderId }}</p>
+        <p><strong>Contract ID:</strong> {{ contractId }}</p>
         <p><strong>Amount:</strong> {{ amount }}</p>
         <p><strong>Payment Date:</strong> {{ paymentDate }}</p>
       </div>
       <div *ngIf="!success" class="error">
         <h2>Payment Failed</h2>
         <p>{{ message }}</p>
-        <p><strong>Order ID:</strong> {{ orderId }}</p>
+        <p><strong>Contract ID:</strong> {{ contractId }}</p>
         <p><strong>Amount:</strong> {{ amount }}</p>
       </div>
       <button (click)="returnToCart()">Return to Cart</button>

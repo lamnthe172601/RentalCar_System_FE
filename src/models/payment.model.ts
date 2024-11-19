@@ -6,7 +6,7 @@ export interface PaymentResponse {
 export interface PaymentReturnResponse {
   status: string;
   message: string;
-  orderId: string;
+  contractId: string;
   amount: string;
   paymentDate?: string;
 }

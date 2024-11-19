@@ -74,6 +74,7 @@ export class CartComponent implements OnInit {
   
     this.authService.rentCar(item.carId, rentalDate, returnDate).subscribe({
       next: (response) => {
+        console.log(response);
         this.selectedCar = item;
         this.totalAmount = this.calculateTotalAmount(item.price, rentalDate, returnDate);
         this.showRentalInfoModal = true;
@@ -115,6 +116,7 @@ export class CartComponent implements OnInit {
       paymentRequest.amount,      
     ).subscribe({
       next: (response: PaymentResponse) => {
+        console.log(paymentRequest.contractId);
         if (response?.url) {
           localStorage.setItem('pendingPayment', JSON.stringify({
             contractId: this.rentalContractDto.contractId,

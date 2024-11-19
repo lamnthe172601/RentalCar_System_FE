@@ -17,7 +17,7 @@ export class PaymentReturnComponent implements OnInit {
   loading = true;
   success = false;
   message = '';
-  orderId = '';
+  contractId = '';
   amount = '';
   paymentDate = '';
 
@@ -35,7 +35,7 @@ export class PaymentReturnComponent implements OnInit {
           this.loading = false;
           this.success = response.status === 'Success';
           this.message = response.message;
-          this.orderId = response.orderId;
+          this.contractId = response.contractId;
           this.amount = response.amount;
           this.paymentDate = response.paymentDate || '';
           console.log('Payment verification response:', response);

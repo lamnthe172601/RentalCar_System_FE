@@ -1,35 +1,47 @@
 <div class="page-title">
   <div class="title">
-    <h2>Login</h2>
+    <h2>Đăng Nhập</h2>
   </div>
   <div class="link">
-    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><i class="fa-solid fa-house-chimney"></i> Home</a>
+    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">
+      <i class="fa-solid fa-house-chimney"></i> Trang Chủ
+    </a>
     <i class="fa-solid fa-angle-right"></i>
-    <span class="page">Login</span>
+    <span class="page">Đăng Nhập</span>
   </div>
 </div>
 
 <section class="login">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="account-form">
     <div class="icon"><i class="fa-solid fa-user"></i></div>
-    <h3>Login</h3>  
+    <h3>Đăng Nhập</h3>
 
     <div class="input-field">
       <label for="email" class="far fa-envelope"></label>
-      <input type="email" formControlName="email" placeholder="Enter your email" id="email" class="box"
-        [ngClass]="{ 'is-invalid': isInvalid('email') }" (ngModelChange)="hideMessages()" />
+      <input type="email" 
+             formControlName="email" 
+             placeholder="Nhập email của bạn" 
+             id="email" 
+             class="box"
+             [ngClass]="{ 'is-invalid': isInvalid('email') }" 
+             (ngModelChange)="hideMessages()" />
     </div>
-    <div *ngIf="isInvalid('email')" style="color: red" class="box">
+    <div *ngIf="isInvalid('email')" class="error-message" style="color: red" class="box">
       {{ getFormError("email") }}
     </div>
 
     <div class="input-field">
       <label for="password" class="fas fa-lock"></label>
-      <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter your password" id="password" class="box"
-        [ngClass]="{ 'is-invalid': isInvalid('password') }" (ngModelChange)="hideMessages()" > 
-        <div class="password-toggle" (click)="togglePasswordVisibility()">
-          <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
-        </div>
+      <input [type]="showPassword ? 'text' : 'password'"
+             formControlName="password" 
+             placeholder="Nhập mật khẩu của bạn" 
+             id="password" 
+             class="box"
+             [ngClass]="{ 'is-invalid': isInvalid('password') }" 
+             (ngModelChange)="hideMessages()">
+      <div class="password-toggle" (click)="togglePasswordVisibility()">
+        <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+      </div>
     </div>
     <div *ngIf="isInvalid('password')" style="color: red" class="box">
       {{ getFormError("password") }}
@@ -40,8 +52,10 @@
     <div *ngIf="errorMessage" style="color: red; margin-bottom: 10px" class="box">
       {{ errorMessage }}
     </div>
-     <button type="submit" class="btn" id="login-btn">Login</button>
-    <p>Don't have an account? <a class="link" routerLink="/register">Register</a></p>
-    <p>Forgot your password? <a class="link" routerLink="/reset-password">Reset Password</a></p>
+
+    <button type="submit" class="btn" id="login-btn">Đăng Nhập</button>
+
+    <p>Chưa có tài khoản? <a class="link" routerLink="/register">Đăng Ký</a></p>
+    <p>Quên mật khẩu? <a class="link" routerLink="/reset-password">Đặt Lại Mật Khẩu</a></p>
   </form>
 </section>

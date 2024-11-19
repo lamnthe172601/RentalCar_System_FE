@@ -1,43 +1,68 @@
 <div class="page-title">
   <div class="title">
-    <h2>Register</h2>
+    <h2>Đăng Ký</h2>
   </div>
   <div class="link">
-    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page"><i class="fa-solid fa-house-chimney"></i> Home</a>
+    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">
+      <i class="fa-solid fa-house-chimney"></i> Trang Chủ
+    </a>
     <i class="fa-solid fa-angle-right"></i>
-    <span class="page">Register</span>
+    <span class="page">Đăng Ký</span>
   </div>
 </div>
 
 <section class="register">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="account-form">
     <div class="icon"><i class="fa-solid fa-user"></i></div>
-    <h3>Register</h3>
+    <h3>Đăng Ký</h3>
 
     <div class="input-field">
       <label for="name" class="fas fa-user"></label>
-      <input type="text" formControlName="name" placeholder="Enter your name" id="name" class="box" [ngClass]="{ 'is-invalid': isInvalid('name') }" />
+      <input type="text" 
+             formControlName="name" 
+             placeholder="Nhập họ tên" 
+             id="name" 
+             class="box" 
+             [ngClass]="{ 'is-invalid': isInvalid('name') }" />
     </div>
     <div *ngIf="isInvalid('name')" style="color: red" class="box">
       {{ getFormError("name") }}
     </div>
+
     <div class="input-field">
       <label for="email" class="far fa-envelope"></label>
-      <input type="email" formControlName="email" placeholder="Enter your email" id="email" class="box" [ngClass]="{ 'is-invalid': isInvalid('email') }" />
+      <input type="email" 
+             formControlName="email" 
+             placeholder="Nhập email" 
+             id="email" 
+             class="box" 
+             [ngClass]="{ 'is-invalid': isInvalid('email') }" />
     </div>
     <div *ngIf="isInvalid('email')" style="color: red" class="box">
       {{ getFormError("email") }}
-    </div>    
+    </div>
+
     <div class="input-field">
       <label for="phoneNumber" class="fas fa-phone"></label>
-      <input type="text" formControlName="phoneNumber" placeholder="Enter your phoneNumber" id="phoneNumber" class="box" [ngClass]="{ 'is-invalid': isInvalid('phoneNumber') }" />
+      <input type="text" 
+             formControlName="phoneNumber" 
+             placeholder="Nhập số điện thoại" 
+             id="phoneNumber" 
+             class="box" 
+             [ngClass]="{ 'is-invalid': isInvalid('phoneNumber') }" />
     </div>
     <div *ngIf="isInvalid('phoneNumber')" style="color: red" class="box">
       {{ getFormError("phoneNumber") }}
     </div>
+
     <div class="input-field">
       <label for="password" class="fas fa-lock"></label>
-      <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter your password" id="password" class="box" [ngClass]="{ 'is-invalid': isInvalid('password') }" />
+      <input [type]="showPassword ? 'text' : 'password'"
+             formControlName="password" 
+             placeholder="Nhập mật khẩu" 
+             id="password" 
+             class="box" 
+             [ngClass]="{ 'is-invalid': isInvalid('password') }" />
       <div class="password-toggle" (click)="togglePasswordVisibility()">
         <i class="fas" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
       </div>
@@ -45,7 +70,7 @@
     <div *ngIf="isInvalid('password')" style="color: red" class="box">
       {{ getFormError("password") }}
     </div>
-    
+
     <div *ngIf="successMessage" style="color: green; margin-bottom: 10px" class="box">
       {{ successMessage }}
     </div>
@@ -53,7 +78,7 @@
       {{ errorMessage }}
     </div>
 
-    <button type="submit" class="btn" id="register-btn">Register</button>
-    <p>Already have an account? <a class="link" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a></p>
+    <button type="submit" class="btn" id="register-btn">Đăng Ký</button>
+    <p>Đã có tài khoản? <a class="link" routerLink="/login">Đăng Nhập</a></p>
   </form>
 </section>

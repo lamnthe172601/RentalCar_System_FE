@@ -15,7 +15,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  showPassword: boolean =false;
+  showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,7 +26,7 @@ export class RegisterComponent {
 
     this.registerForm = this.fb.group({
       name: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(passwordPattern)]],
     });
@@ -44,16 +44,25 @@ export class RegisterComponent {
     const control = this.registerForm.get(fieldName);
     if (control && control.errors) {
       if (control.errors['required']) {
-        return 'This field is required';
+        switch(fieldName) {
+          case 'name': return 'Vui lòng nhập họ tên';
+          case 'email': return 'Vui lòng nhập email';
+          case 'phoneNumber': return 'Vui lòng nhập số điện thoại';
+          case 'password': return 'Vui lòng nhập mật khẩu';
+          default: return 'Trường này là bắt buộc';
+        }
       }
       if (control.errors['email']) {
-        return 'Invalid email format';
-      }
-      if (control.errors['minlength']) {
-        return 'Password must be at least 8 characters long';
+        return 'Email không hợp lệ';
       }
       if (control.errors['pattern']) {
-        return 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character';
+        if (fieldName === 'phoneNumber') {
+          return 'Số điện thoại phải có 10 chữ số';
+        }
+        return 'Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt';
+      }
+      if (control.errors['minlength']) {
+        return 'Mật khẩu phải có ít nhất 8 ký tự';
       }
     }
     return '';
@@ -62,20 +71,20 @@ export class RegisterComponent {
   onSubmit(): void {
     if (this.registerForm.valid) {
       const { name, email, phoneNumber, password } = this.registerForm.value;
-      this.authService.signup(name, email, phoneNumber, password).subscribe(
-        response => {
-          this.successMessage = 'Register successful';
+      this.authService.signup(name, email, phoneNumber, password).subscribe({
+        next: () => {
+          this.successMessage = 'Đăng ký thành công';
           this.errorMessage = null;
-          localStorage.removeItem("token"); // Xóa token sau khi đăng ký thành công
+          localStorage.removeItem("token");
           this.router.navigate(['/login'], { queryParams: { registered: 'success' } });
         },
-        error => {
+        error: (error) => {
           this.successMessage = null;
-          this.errorMessage = error.error.message || 'Register failed. Please try again.';
+          this.errorMessage = error.error.message || 'Đăng ký thất bại. Vui lòng thử lại.';
         }
-      );
+      });
     } else {
-      this.errorMessage = 'Please fill out all fields correctly.';
+      this.errorMessage = 'Vui lòng điền đầy đủ thông tin.';
     }
   }
 }

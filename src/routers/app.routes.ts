@@ -19,38 +19,38 @@ import { AdminCarComponent } from '../views/Cars/admin-car/admin-car.component';
 export const routes: Routes = [
   {
     path: 'home',
-    title: 'Home',
+    title: 'Trang chủ',
     component: HomePageComponent,
     children: [      
     ]
   },
   {
     path: 'login',
-    title: 'login',
+    title: 'Đăng nhập',
     component: LoginComponent,
     canActivate: [AuthLoginGuard]
   },
   {
     path: 'register',
-    title: 'Register',
+    title: 'Đăng ký',
     component: RegisterComponent,
     canActivate: [AuthLoginGuard]
   },
   {
     path: 'reset-password',
-    title: 'Reset Password',
+    title: 'Đặt lại mật khẩu',
     component: ResetPasswordComponent,
     canActivate: [AuthLoginGuard]
   },
   {
     path: 'change-password',
-    title: 'Change Password',
+    title: 'Thay đổi mật khẩu',
     canActivate: [AuthGuard],
     component: ChangePasswordComponent,
   },
   {
     path: 'profile',
-    title: 'Profile',
+    title: 'Thông tin cá nhân',
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },

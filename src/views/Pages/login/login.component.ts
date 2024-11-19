@@ -25,17 +25,17 @@ export class LoginComponent implements OnInit {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['passwordChanged'] === 'success') {
-        this.successMessage = 'Password changed successfully. Please log in with your new password.';
+        this.successMessage = 'Đổi mật khẩu thành công. Vui lòng đăng nhập với mật khẩu mới.';
       }
       if (params['registered'] === 'success') {
-        this.successMessage = 'Registration successful. Please check email to verify.';
+        this.successMessage = 'Đăng ký thành công. Vui lòng kiểm tra email để xác thực tài khoản.';
       }
     });
   }
@@ -51,12 +51,15 @@ export class LoginComponent implements OnInit {
 
   getFormError(fieldName: string): string {
     const control = this.loginForm.get(fieldName);
-    if (control && control.errors) {
+    if (control?.errors) {
       if (control.errors['required']) {
-        return 'This field is required';
+        return `Vui lòng nhập ${fieldName === 'email' ? 'email' : 'mật khẩu'}`;
       }
       if (control.errors['email']) {
-        return 'Invalid email format';
+        return 'Email không hợp lệ';
+      }
+      if (control.errors['minlength']) {
+        return 'Mật khẩu phải có ít nhất 6 ký tự';
       }
     }
     return '';
@@ -69,20 +72,20 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).subscribe(
-        response => {
-          this.successMessage = 'Login successful';
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          this.successMessage = 'Đăng nhập thành công';
           this.errorMessage = null;
           localStorage.setItem("token", response.token);
           this.router.navigate(['/home']);
         },
-        error => {
+        error: (error) => {
           this.successMessage = null;
-          this.errorMessage = error.error.message || 'Login failed. Please try again.';
+          this.errorMessage = error.error.message || 'Đăng nhập thất bại. Vui lòng thử lại.';
         }
-      );
+      });
     } else {
-      this.errorMessage = 'Please fill out all fields correctly.';
+      this.errorMessage = 'Vui lòng điền đầy đủ thông tin.';
     }
   }
 }

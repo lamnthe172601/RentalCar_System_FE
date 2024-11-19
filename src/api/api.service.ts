@@ -4,13 +4,15 @@ import { data } from 'jquery';
 import { Observable } from 'rxjs';
 import { CarRented } from '../models/car-rented.model';
 import { ForgotPasswordRequest, ResetPasswordRequest, VerifyEmailRequest } from '../models/password.model';
+import { UserProfile } from 'firebase/auth';
+import { UpdateProfileRequest } from '../models/profile.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private headerCustom = {}
+  private headerCustom: { headers: { [key: string]: string } } = { headers: { "Authorization": "Bearer " + localStorage.getItem("token") || '' } }
 
   constructor(private http: HttpClient) {
     this.headerCustom = { headers: { "Authorization": "Bearer " + localStorage.getItem("token") } }
@@ -37,16 +39,25 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}/General/change-password`, data, this.headerCustom);
   }
 
-  getProfile(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/General/Get-profile`, this.headerCustom);
+  getProfile(): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.baseUrl}/General/Get-profile`, this.headerCustom);
   }
 
-  updateProfile(data: any): Observable<any> {
+  updateProfile(data: UpdateProfileRequest): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/General/update-profile`, data, this.headerCustom);
   }
 
-  uploadAvatar(formData: FormData): Observable<any> {
+  uploadAvatar(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
     return this.http.post<any>(`${this.baseUrl}/General/upload-avatar`, formData, this.headerCustom);
+  }
+
+  getAvatar(): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/General/get-avatar`, {
+      ...this.headerCustom,
+      responseType: 'blob'
+    });
   }
 
   getAvatarUrl(): Observable<Blob> {

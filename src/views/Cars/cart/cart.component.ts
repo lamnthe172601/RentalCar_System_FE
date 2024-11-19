@@ -24,6 +24,8 @@ export class CartComponent implements OnInit {
   @Input() selectedCar: any;
   @Input() totalAmount: number = 0;
   @Input() rentalContractDto: any;
+  notificationMessage: string = '';
+  notificationType: 'success' | 'error' = 'success';
   constructor(private authService: AuthService, private router: Router) {}
   url: string = '';
 
@@ -50,25 +52,33 @@ export class CartComponent implements OnInit {
   removeItem(cartId: string): void {
     this.authService.removeFromCart(cartId).subscribe(
       (response) => {
-        console.log('Item removed from cart:', response);
+        console.log('Đã xóa mục khỏi giỏ hàng:', response);
         this.loadCartItems();  
       },
       (error) => {
-        console.error('Error removing item from cart', error);
+        console.error('Lỗi khi xóa mục khỏi giỏ hàng', error);
+        this.showNotification('Lỗi khi xóa mục khỏi giỏ hàng', 'error');
       }
     );
   }
   rentCar(item: CartItemDto): void {
     if (!item.startDate || !item.endDate) {
-      alert('Please select both start date and end date.');
+      this.showNotification('Vui lòng chọn cả ngày bắt đầu và ngày kết thúc.', 'error');
       return;
     }
   
     const rentalDate = new Date(item.startDate);
     const returnDate = new Date(item.endDate);
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    
+    if (rentalDate.getTime() < currentDate.getTime()) {
+    this.showNotification('Ngày bắt đầu thuê không thể là quá khứ.', 'error');
+    return;
+  }
   
-    if (rentalDate >= returnDate) {
-      alert('The return date must be after the rental date.');
+    if (rentalDate.getTime() >= returnDate.getTime()) {
+      this.showNotification('Ngày trả xe phải sau ngày thuê.', 'error');
       return;
     }
   
@@ -80,10 +90,11 @@ export class CartComponent implements OnInit {
         this.showRentalInfoModal = true;
         this.rentalContractDto = response.data;
         console.log(this.totalAmount, this.rentalContractDto?.contractId);
+        this.showNotification('Thuê xe thành công!', 'success');
       },
       error: (error) => {
-        console.error('Error renting car:', error);
-        alert(error.error?.message || 'Failed to rent the car. Please try again.');
+        console.error('Lỗi khi thuê xe:', error);
+        this.showNotification(error.error?.message || 'Thuê xe thất bại. Vui lòng thử lại.', 'error');
       }
     });
   }
@@ -102,7 +113,7 @@ export class CartComponent implements OnInit {
 
   confirmRental(): void {  
     if (!this.rentalContractDto?.contractId || !this.totalAmount) {
-      alert('Missing contract ID or amount');
+      this.showNotification('Thiếu ID hợp đồng hoặc số tiền', 'error');
       return;
     }
 
@@ -124,14 +135,21 @@ export class CartComponent implements OnInit {
           }));
           window.location.href = response.url;
         } else {
-          alert('Invalid payment URL received');
+          this.showNotification('URL thanh toán không hợp lệ', 'error');
         }
       },
       error: (error) => {
-        console.error('Payment error:', error);
-        alert('Failed to initiate payment. Please try again.');
+        console.error('Lỗi thanh toán:', error);
+        this.showNotification('Khởi tạo thanh toán thất bại. Vui lòng thử lại.', 'error');
       }
     });
   }
-  
+  showNotification(message: string, type: 'success' | 'error'): void {
+    this.notificationMessage = message;
+    this.notificationType = type;
+  }
+
+  closeNotificationModal(): void {
+    this.notificationMessage = '';
+  }
 }

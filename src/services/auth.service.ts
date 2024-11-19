@@ -14,6 +14,7 @@ export class AuthService {
   private tokenExpirationTimer: any;
   private readonly TOKEN_EXPIRATION_TIME = 10 * 60 * 1000; // 30 seconds
   private apiUrl = 'https://localhost:44360/api/Car';
+  private readonly ROLE_CLAIM = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
 
   constructor(private apiService: ApiService, private router: Router, private auth: Auth, private http: HttpClient) {
     this.initializeTokenCheck();
@@ -32,8 +33,7 @@ export class AuthService {
     return this.apiService.login(payload).pipe(
       tap((response) => {
         if (response && response.token) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('tokenTimestamp', Date.now().toString());
+          this.storeUserData(response.token);
           this.setTokenExpirationTimer();
         }
       })
@@ -77,8 +77,13 @@ export class AuthService {
     return false;
   }
 
-  getUserRole(): string {
-    return localStorage.getItem('role') || '';
+  getUserRole(): string | null {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.parseJwt(token);
+      return decodedToken?.[this.ROLE_CLAIM] || null;
+    }
+    return null;
   }
 
   getUserId(): string | null {
@@ -101,7 +106,8 @@ export class AuthService {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
       return JSON.parse(jsonPayload);
-    } catch (error) {
+    } catch (e) {
+      console.error('Error parsing JWT:', e);
       return null;
     }
   }
@@ -215,5 +221,34 @@ export class AuthService {
 
   getAvatar(): Observable<Blob> {
     return this.apiService.getAvatar();
+  }
+
+  // Add new method to decode and store role when logging in
+  storeUserData(token: string) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('tokenTimestamp', Date.now().toString());
+    
+    const decodedToken = this.parseJwt(token);
+    if (decodedToken) {
+      localStorage.setItem('userRole', decodedToken.role);
+      localStorage.setItem('userId', decodedToken.sub);
+    }
+  }
+
+  // Update getUserRole to handle array of roles
+  getUserRoles(): string[] {
+    const role = localStorage.getItem('userRole');
+    return role ? [role] : [];
+  }
+
+  // Add method to check if user has required role
+  hasRole(requiredRole: string): boolean {
+    const userRoles = this.getUserRoles();
+    return userRoles.includes(requiredRole);
+  }
+
+  hasRequiredRole(requiredRole: string): boolean {
+    const userRole = this.getUserRole();
+    return userRole === requiredRole;
   }
 }

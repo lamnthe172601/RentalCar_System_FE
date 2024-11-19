@@ -15,6 +15,7 @@ import { VerifyEmailComponent } from '../views/Pages/verify-email/verify-email.c
 import { AuthGuard } from '../guards/auth.guard';
 import { EditCarComponent } from '../views/Cars/edit-car/edit-car.component';
 import { AdminCarComponent } from '../views/Cars/admin-car/admin-car.component';
+import { RoleGuard } from '../guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -80,7 +81,7 @@ export const routes: Routes = [
    path: 'add-car',
    title: 'Add Car',
    component: AddCarComponent,
-   canActivate: [AuthGuard] ,
+   canActivate: [AuthGuard, RoleGuard] ,
    data: {
     roles: ['admin']
 } 

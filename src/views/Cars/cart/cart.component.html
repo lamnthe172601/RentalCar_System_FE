@@ -82,3 +82,22 @@
   </div>
 </div>
 </div>
+<!-- cart.component.html -->
+<div class="notification-modal" *ngIf="notificationMessage">
+  <div class="notification-modal-dialog">
+    <div class="notification-modal-content" [ngClass]="{'success': notificationType === 'success', 'error': notificationType === 'error'}">
+      <div class="notification-modal-header">
+        <h5 class="notification-modal-title">{{ notificationType === 'success' ? 'Success' : 'Error' }}</h5>
+        <button type="button" class="close" (click)="closeNotificationModal()">&times;</button>
+      </div>
+      <div class="notification-modal-body">
+        <p>{{ notificationMessage }}</p>
+      </div>
+      <div class="notification-modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeNotificationModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Your existing HTML -->

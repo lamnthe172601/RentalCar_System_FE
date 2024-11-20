@@ -110,7 +110,6 @@ export class ApiService {
   forgotPassword(data: ForgotPasswordRequest): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/General/forgot-password`, data);
   }
-
   resetPassword(data: ResetPasswordRequest): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/General/reset-password`, data);
   }

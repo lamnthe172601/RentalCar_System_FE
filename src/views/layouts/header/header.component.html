@@ -121,11 +121,10 @@
         </div>
         <div class="sub-nav-link">
           <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Xe Đã Thuê</a>
-          <a *ngIf="authService.isLoggedIn()"  routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">car grid</a>
-          <a *ngIf="authService.isLoggedIn()"  routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">Add Car</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">Danh sách xe</a>
+          <a *ngIf="authService.isLoggedIn()"  routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">Thêm xe</a>
           <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Danh Sách Xe Đang Thuê</a>
           <a *ngIf="authService.isLoggedIn()"  routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
-          <a *ngIf="authService.isLoggedIn()"  routerLink="/edit-car" routerLinkActive="active" ariaCurrentWhenActive="page">Edit Car</a>
           <a *ngIf="authService.isLoggedIn()"  routerLink="/admin-car" routerLinkActive="active" ariaCurrentWhenActive="page">Admin Car</a>
 
         </div>

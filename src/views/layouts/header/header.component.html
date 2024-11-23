@@ -47,10 +47,10 @@
   <div class="dropdown-content">
    
     <a *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Nhập</a>
-    <a *ngIf="!authService.isLoggedIn()" routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Ký</a>
-    <a *ngIf="!authService.isLoggedIn()" routerLink="/reset-password" routerLinkActive="active" ariaCurrentWhenActive="page">Quên Mật Khẩu</a>
-    <a *ngIf="authService.isLoggedIn()"  routerLink="/change-password" routerLinkActive="active" ariaCurrentWhenActive="page">Đổi Mật Khẩu</a>
-    <a *ngIf="authService.isLoggedIn()"  routerLink="/profile" routerLinkActive="active" ariaCurrentWhenActive="page">Profile</a>
+    <a *ngIf="!authService.isLoggedIn()&& authService.getUserRole() !== 'admin'" routerLink="/register" routerLinkActive="active" ariaCurrentWhenActive="page">Đăng Ký</a>
+    <a *ngIf="!authService.isLoggedIn()&& authService.getUserRole() !== 'admin'" routerLink="/reset-password" routerLinkActive="active" ariaCurrentWhenActive="page">Quên Mật Khẩu</a>
+    <a *ngIf="authService.isLoggedIn()&& authService.getUserRole() !== 'admin'" routerLink="/change-password" routerLinkActive="active" ariaCurrentWhenActive="page">Đổi Mật Khẩu</a>
+    <a *ngIf="authService.isLoggedIn()&& authService.getUserRole() !== 'admin'"  routerLink="/profile" routerLinkActive="active" ariaCurrentWhenActive="page">Profile</a>
     <a *ngIf="authService.isLoggedIn()" (click)="logout()" class="btn-logout">Logout</a>
   </div>
 </div>
@@ -59,15 +59,10 @@
           <div class="dropdown-menu">
             <button class="nav-btn">cars <i class="fas fa-angle-down"></i> </button>
             <div class="dropdown-content">
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Rented Car</a>
-
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">car grid</a>
-              
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/add-car" routerLinkActive="active" ariaCurrentWhenActive="page">Add Car</a>
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Danh Sách Xe Đang Thuê</a>           
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/edit-car" routerLinkActive="active" ariaCurrentWhenActive="page">Edit Car</a>
-              <a *ngIf="authService.isLoggedIn()"  routerLink="/admin-car" routerLinkActive="active" ariaCurrentWhenActive="page">Admin Car</a>
+              <a *ngIf="authService.isLoggedIn() && authService.getUserRole() !== 'admin'" routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Rented Car</a>
+              <a *ngIf="authService.isLoggedIn() && authService.getUserRole() !== 'admin'" routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page">Danh sách xe</a>
+              <a *ngIf="authService.isLoggedIn() && authService.getUserRole() != 'admin'" routerLink="/rented-cars" routerLinkActive="active" ariaCurrentWhenActive="page">Danh Sách Xe Đang Thuê</a>           
+              <a *ngIf="authService.isLoggedIn() && authService.getUserRole() != 'admin'" routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
               <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/add-car" routerLinkActive="active">Add Car</a>
               <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/admin-car" routerLinkActive="active">Admin Car</a>
              
@@ -78,7 +73,7 @@
 
         </nav>
 
-        <a href="pages/Cars/Car-Grid.html" class="btn">Rent Car</a>
+        <a *ngIf="authService.isLoggedIn() && authService.getUserRole() !== 'admin'" routerLink="/car-grid" routerLinkActive="active" ariaCurrentWhenActive="page" class="btn">Rent Car</a>
 
       </div>
 

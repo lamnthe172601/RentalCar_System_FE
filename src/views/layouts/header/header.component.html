@@ -65,6 +65,7 @@
               <a *ngIf="authService.isLoggedIn() && authService.getUserRole() != 'admin'" routerLink="/cart" routerLinkActive="active" ariaCurrentWhenActive="page">Giỏ Hàng</a>
               <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/add-car" routerLinkActive="active">Add Car</a>
               <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/admin-car" routerLinkActive="active">Admin Car</a>
+              <a *ngIf="authService.getUserRole() === 'admin'" routerLink="/admin-dashboard" routerLinkActive="active">admin-dashboard</a>
              
               
             </div>

@@ -101,6 +101,8 @@ export class AuthService {
     }
     return null;
   }
+// Lấy danh sách tất cả người dùng
+
 
   private parseJwt(token: string): any {
     try {
@@ -314,6 +316,20 @@ createPayment(contractId: string, amount: number): Observable<PaymentResponse> {
   getUserRoles(): string[] {
     const role = localStorage.getItem('userRole');
     return role ? [role] : [];
+  }
+  // Tổng doanh thu
+  getTotalRevenue(): Observable<any> {
+    return this.apiService.getTotalRevenue();
+  }
+
+  // Số lượng thanh toán theo trạng thái
+  getPaymentCountByStatus(status: string): Observable<any> {
+    return this.apiService.getPaymentCountByStatus(status);
+  }
+
+  // Thanh toán theo khoảng thời gian
+  getPaymentsByDateRange(startDate: string, endDate: string): Observable<any> {
+    return this.apiService.getPaymentsByDateRange(startDate, endDate);
   }
 
   // Add method to check if user has required role

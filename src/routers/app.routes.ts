@@ -18,6 +18,7 @@ import { EditCarComponent } from '../views/Cars/edit-car/edit-car.component';
 import { AdminCarComponent } from '../views/Cars/admin-car/admin-car.component';
 import { RoleGuard } from '../guards/role.guard';
 import { PaymentReturnComponent } from '../views/payment-return/payment-return.component';
+import { AdminDashboardComponent } from '../views/Cars/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -107,6 +108,16 @@ export const routes: Routes = [
     roles: ['admin']
 } 
 },
+{
+  path: 'admin-dashboard',
+  title: 'Admin dashboard ',
+  component: AdminDashboardComponent,
+  canActivate: [AuthGuard,RoleGuard],
+  data: {
+    roles: ['admin']
+} 
+},
+   
    
   {
     path: 'verify-email',

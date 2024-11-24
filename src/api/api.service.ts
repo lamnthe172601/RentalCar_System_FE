@@ -95,8 +95,25 @@ export class ApiService {
   getCarById(carId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/Car/${carId}`);
   }
+  // API: Tổng doanh thu
+  getTotalRevenue(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/statistics/total-revenue`);
+  }
 
-  
+  // API: Số lượng thanh toán theo trạng thái
+  getPaymentCountByStatus(status: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/statistics/payment-count`, {
+      params: { status },
+    });
+  }
+
+  // API: Thanh toán theo khoảng thời gian
+  getPaymentsByDateRange(startDate: string, endDate: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/statistics/payments`, {
+      params: { startDate, endDate },
+    });
+  }
+
   updateCar(car: any): Observable<any> {
     const id = car.get('id');
     return this.http.put<any>(`${this.baseUrl}/Car/edit-car?id=${id}`, car);
